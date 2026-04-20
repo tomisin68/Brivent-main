@@ -1,0 +1,10 @@
+# security.txt
+# Brivent Security Contact
+
+Contact: mailto:security@brivent.co
+Encryption: https://www.brivent.co/pgp-key.asc
+Preferred-Languages: en
+Canonical: https://www.brivent.co/.well-known/security.txt
+Expires: 2026-03-25T00:00:00.000Z
+Acknowledgments: https://www.brivent.co/security/acknowledgments
+Policy: https://www.brivent.co/security-policy

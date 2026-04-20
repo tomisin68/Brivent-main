@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services — Brivent</title>
+  <meta name="description" content="What Brivent builds: product development, community building, and startup support — three pillars, one mission.">
+  <link rel="icon" href="favicon.jpg" type="image/jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .p-hero {
+      padding: calc(90px + clamp(60px,8vw,100px)) 0 clamp(60px,8vw,100px);
+      position: relative; overflow: hidden;
+    }
+    .p-hero__label { font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--persian);margin-bottom:20px;display:block; }
+    /* Service sections */
+    .svc-section {
+      padding: clamp(60px,8vw,100px) 0;
+      position: relative;
+      border-top: 1px solid var(--glass-border);
+    }
+    .svc-section:first-of-type { border-top: none; }
+    .svc-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(48px, 8vw, 100px);
+      align-items: center;
+    }
+    .svc-layout.rev { direction: rtl; }
+    .svc-layout.rev > * { direction: ltr; }
+    .svc-big-num {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 10vw, 9rem);
+      font-weight: 700;
+      letter-spacing: -.06em;
+      line-height: 1;
+      background: linear-gradient(180deg, rgba(21,43,249,.4) 0%, transparent 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      margin-bottom: 4px;
+      user-select: none;
+    }
+    .svc-img {
+      position: relative;
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      aspect-ratio: 5/4;
+    }
+    .svc-img img { width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(.75); transition: transform var(--t-slow) var(--ease); }
+    .svc-img:hover img { transform: scale(1.04); }
+    .svc-img::before {
+      content:''; position:absolute;inset:0;
+      background: linear-gradient(135deg, rgba(21,43,249,.2), rgba(3,3,45,.4));
+      z-index:1;
+    }
+    .svc-img__border { position:absolute;inset:0;border:1px solid var(--glass-border);border-radius:inherit;z-index:2;pointer-events:none; }
+    /* Feature tags */
+    .feat-chips { display:flex;flex-wrap:wrap;gap:8px;margin-top:20px; }
+    .feat-chip {
+      display:inline-flex;align-items:center;gap:6px;
+      padding:7px 14px;
+      border-radius:var(--r-pill);
+      background:var(--glass-w); border:1px solid var(--glass-border);
+      font-size:.72rem; font-weight:600; letter-spacing:.05em;
+      color:var(--white-80); transition:all var(--t-med);
+    }
+    .feat-chip i { color:var(--persian); font-size:.65rem; }
+    .feat-chip:hover { border-color:rgba(215,215,255,.25); background:rgba(21,43,249,.08); }
+    /* Process section */
+    .process-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:16px; }
+    .proc-card {
+      padding:clamp(24px,3vw,36px) 24px;
+      border-radius:var(--r-lg);
+      background:var(--glass-w); border:1px solid var(--glass-border);
+      text-align:center; position:relative; overflow:hidden;
+      transition: border-color var(--t-med), transform var(--t-med) var(--ease), box-shadow var(--t-med);
+    }
+    .proc-card:hover { border-color:rgba(215,215,255,.22);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.3); }
+    .proc-card::before {
+      content:''; position:absolute;top:0;left:50%;transform:translateX(-50%);
+      width:40%;height:1px;
+      background:linear-gradient(90deg,transparent,var(--persian),transparent);
+    }
+    .proc-n {
+      font-family:var(--font-display);
+      font-size:clamp(1.8rem,3vw,2.5rem);font-weight:700;
+      color:var(--persian);opacity:.5;
+      margin-bottom:12px; letter-spacing:-.04em;
+    }
+    .proc-card h4 { font-size:.95rem;margin-bottom:8px; }
+    .proc-card p  { font-size:.82rem;color:var(--white-60);line-height:1.7; }
+    /* Why us */
+    .why-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:16px; }
+    @media (max-width:1024px){
+      .svc-layout { grid-template-columns:1fr; }
+      .svc-layout.rev { direction:ltr; }
+      .process-grid { grid-template-columns:repeat(2,1fr); }
+      .why-grid { grid-template-columns:1fr; }
+    }
+    @media (max-width:600px){
+      .process-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
+<div class="loader" id="loader">
+  <div class="loader__logo"><img src="brivent.png" alt="Brivent"></div>
+  <div class="loader__bar"></div>
+</div>
+
+<nav class="nav" id="nav">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="brivent.png" alt="Brivent"></a>
+      <ul class="nav__links">
+        <li><a href="index.html"    class="nav__link">Home</a></li>
+        <li><a href="about.html"    class="nav__link">About</a></li>
+        <li><a href="services.html" class="nav__link">Services</a></li>
+        <li><a href="products.html" class="nav__link">Products</a></li>
+        <li><a href="contact.html"  class="nav__link">Contact</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="contact.html" class="btn btn-primary btn-sm" data-mag>Get in Touch <i class="fa-solid fa-arrow-right"></i></a>
+        <button class="nav__burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="m-menu" id="mMenu">
+  <ul class="m-menu__links">
+    <li><a href="index.html"    class="m-menu__link">Home</a></li>
+    <li><a href="about.html"    class="m-menu__link">About</a></li>
+    <li><a href="services.html" class="m-menu__link">Services</a></li>
+    <li><a href="products.html" class="m-menu__link">Products</a></li>
+    <li><a href="contact.html"  class="m-menu__link">Contact</a></li>
+  </ul>
+  <p class="m-menu__foot">&copy; 2024 Brivent &mdash; Lagos, Nigeria</p>
+</div>
+
+<!-- ══ PAGE HERO ══ -->
+<section class="p-hero">
+  <div class="orb orb-blue"  style="width:600px;height:600px;top:-20%;right:-8%;opacity:.5" aria-hidden="true"></div>
+  <div class="orb orb-red"   style="width:350px;height:350px;bottom:-8%;left:-5%;opacity:.35" aria-hidden="true"></div>
+  <div class="grid-ovr" aria-hidden="true"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <span class="p-hero__label" data-reveal="up">What We Build</span>
+    <h1 class="d-lg" data-reveal="up" data-d="1">Three pillars.<br><span style="color:var(--persian)">One mission.</span></h1>
+    <p class="lead" data-reveal="up" data-d="2" style="max-width:580px">Brivent's work falls into three interconnected areas — each one supporting the others, each one essential to the infrastructure of ambition.</p>
+    <div style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap" data-reveal="up" data-d="3">
+      <a href="#product-dev" class="btn btn-glass btn-sm">Product Development</a>
+      <a href="#community"   class="btn btn-glass btn-sm">Community Building</a>
+      <a href="#startup"     class="btn btn-glass btn-sm">Startup Support</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICE 01: PRODUCT DEVELOPMENT ══ -->
+<section class="svc-section" id="product-dev">
+  <div class="container">
+    <div class="svc-layout">
+      <div data-reveal="left">
+        <span class="svc-big-num">01</span>
+        <div class="sec-hd" style="margin-bottom:20px">
+          <span class="badge"><span class="bdot"></span> Core Service</span>
+          <h2 class="d-md mt-16">Product Development.</h2>
+          <p class="lead mt-16">We build digital products end-to-end — from the first sketch to a live, scalable system used by real people. Every product we ship solves a genuine problem.</p>
+        </div>
+        <p class="small" style="color:var(--white-60);line-height:1.85;margin-bottom:24px">Our development philosophy is simple: understand the problem deeply, design with clarity, build with precision, and iterate relentlessly. We don't ship half-finished products. We ship things that work.</p>
+        <ul class="checklist" style="margin-bottom:24px">
+          <li><i class="fa-solid fa-circle-check"></i> Full-stack web application development</li>
+          <li><i class="fa-solid fa-circle-check"></i> SaaS platform architecture and deployment</li>
+          <li><i class="fa-solid fa-circle-check"></i> API design, integration, and automation</li>
+          <li><i class="fa-solid fa-circle-check"></i> WhatsApp Business API and chatbot systems</li>
+          <li><i class="fa-solid fa-circle-check"></i> Product strategy and roadmap planning</li>
+        </ul>
+        <div class="feat-chips">
+          <span class="feat-chip"><i class="fa-solid fa-code"></i> Full-Stack Dev</span>
+          <span class="feat-chip"><i class="fa-solid fa-cloud"></i> Cloud Deploy</span>
+          <span class="feat-chip"><i class="fa-brands fa-whatsapp"></i> WhatsApp API</span>
+          <span class="feat-chip"><i class="fa-solid fa-mobile-screen"></i> Mobile-First</span>
+          <span class="feat-chip"><i class="fa-solid fa-bolt"></i> Fast Iteration</span>
+        </div>
+      </div>
+      <div class="svc-img" data-reveal="right">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&q=80" alt="Product development at Brivent" loading="lazy">
+        <div class="svc-img__border"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICE 02: COMMUNITY BUILDING ══ -->
+<section class="svc-section" id="community">
+  <div class="container">
+    <div class="svc-layout rev">
+      <div data-reveal="right">
+        <span class="svc-big-num" style="background:linear-gradient(180deg,rgba(255,17,11,.4) 0%,transparent 100%);-webkit-background-clip:text;background-clip:text">02</span>
+        <div class="sec-hd" style="margin-bottom:20px">
+          <span class="badge"><span class="bdot red"></span> Core Service</span>
+          <h2 class="d-md mt-16">Community Building.</h2>
+          <p class="lead mt-16">We design and grow communities where the right people find each other. Not just online groups — real ecosystems where collaboration, learning, and growth happen naturally.</p>
+        </div>
+        <p class="small" style="color:var(--white-60);line-height:1.85;margin-bottom:24px">The most powerful infrastructure in any builder ecosystem is human connection. We build the structures — digital and physical — that make those connections systematic, scalable, and sustainable.</p>
+        <ul class="checklist" style="margin-bottom:24px">
+          <li><i class="fa-solid fa-circle-check"></i> Community platform design and development</li>
+          <li><i class="fa-solid fa-circle-check"></i> Engagement systems and community programs</li>
+          <li><i class="fa-solid fa-circle-check"></i> Mentorship network architecture</li>
+          <li><i class="fa-solid fa-circle-check"></i> Events, workshops, and learning formats</li>
+          <li><i class="fa-solid fa-circle-check"></i> Community analytics and health tracking</li>
+        </ul>
+        <div class="feat-chips">
+          <span class="feat-chip"><i class="fa-solid fa-users"></i> Member Networks</span>
+          <span class="feat-chip"><i class="fa-solid fa-chalkboard-user"></i> Mentorship</span>
+          <span class="feat-chip"><i class="fa-solid fa-calendar-days"></i> Events</span>
+          <span class="feat-chip"><i class="fa-solid fa-chart-line"></i> Analytics</span>
+        </div>
+      </div>
+      <div class="svc-img" data-reveal="left">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80" alt="Community building at Brivent" loading="lazy">
+        <div class="svc-img__border"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICE 03: STARTUP SUPPORT ══ -->
+<section class="svc-section" id="startup">
+  <div class="container">
+    <div class="svc-layout">
+      <div data-reveal="left">
+        <span class="svc-big-num" style="background:linear-gradient(180deg,rgba(0,214,143,.4) 0%,transparent 100%);-webkit-background-clip:text;background-clip:text">03</span>
+        <div class="sec-hd" style="margin-bottom:20px">
+          <span class="badge"><span class="bdot green"></span> Core Service</span>
+          <h2 class="d-md mt-16">Startup Support.</h2>
+          <p class="lead mt-16">We provide early-stage ventures with the infrastructure, tools, and connections they need to go from idea to traction — without reinventing the wheel.</p>
+        </div>
+        <p class="small" style="color:var(--white-60);line-height:1.85;margin-bottom:24px">Most startups in Africa don't fail because of lack of ambition. They fail because they lack access to the right infrastructure at the right time. We fix that. We give structure to the early stage.</p>
+        <ul class="checklist" style="margin-bottom:24px">
+          <li><i class="fa-solid fa-circle-check"></i> Product validation and market research</li>
+          <li><i class="fa-solid fa-circle-check"></i> Technical co-founding and development support</li>
+          <li><i class="fa-solid fa-circle-check"></i> Investor readiness and pitch preparation</li>
+          <li><i class="fa-solid fa-circle-check"></i> Access to the Brivent partner network</li>
+          <li><i class="fa-solid fa-circle-check"></i> Go-to-market strategy and early growth</li>
+        </ul>
+        <div class="feat-chips">
+          <span class="feat-chip"><i class="fa-solid fa-lightbulb"></i> Validation</span>
+          <span class="feat-chip"><i class="fa-solid fa-handshake"></i> Partnerships</span>
+          <span class="feat-chip"><i class="fa-solid fa-chart-pie"></i> GTM Strategy</span>
+          <span class="feat-chip"><i class="fa-solid fa-sack-dollar"></i> Fundraising</span>
+        </div>
+      </div>
+      <div class="svc-img" data-reveal="right">
+        <img src="https://images.unsplash.com/photo-1553028826-f4804a6dba3b?w=900&q=80" alt="Startup support at Brivent" loading="lazy">
+        <div class="svc-img__border"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROCESS ══ -->
+<section class="sec">
+  <div class="container">
+    <div class="sec-hd ctr" data-reveal="up">
+      <span class="badge"><span class="bdot"></span> How We Work</span>
+      <h2 class="d-md mt-16">Our process.</h2>
+      <p class="lead mt-16">Whether we're building a product, growing a community, or supporting a startup — every engagement follows the same core framework.</p>
+    </div>
+    <div class="process-grid">
+      <div class="proc-card" data-reveal="up" data-d="1">
+        <div class="proc-n">01</div>
+        <h4>Discover</h4>
+        <p>We start by understanding the problem deeply — the users, the context, the constraints, and the opportunity.</p>
+      </div>
+      <div class="proc-card" data-reveal="up" data-d="2">
+        <div class="proc-n">02</div>
+        <h4>Define</h4>
+        <p>We shape a clear direction: the right solution, the right scope, and the right success metrics before any building begins.</p>
+      </div>
+      <div class="proc-card" data-reveal="up" data-d="3">
+        <div class="proc-n">03</div>
+        <h4>Build</h4>
+        <p>We execute with precision — fast iteration, tight feedback loops, and a relentless focus on quality and craft.</p>
+      </div>
+      <div class="proc-card" data-reveal="up" data-d="4">
+        <div class="proc-n">04</div>
+        <h4>Scale</h4>
+        <p>We don't hand over and walk away. We help things grow — monitoring, optimizing, and expanding what works.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHY BRIVENT ══ -->
+<section class="sec" style="padding-top:0">
+  <div class="container">
+    <div class="sec-hd ctr" data-reveal="up">
+      <span class="badge"><span class="bdot red"></span> Why Brivent</span>
+      <h2 class="d-md mt-16">What sets us apart.</h2>
+    </div>
+    <div class="why-grid">
+      <div class="card" data-reveal="up" data-d="1">
+        <div class="card-ico"><i class="fa-solid fa-map-location-dot"></i></div>
+        <h4 class="mb-12" style="font-size:1.05rem">Built for Africa</h4>
+        <p class="small" style="color:var(--white-60);line-height:1.75">We understand the African market, the constraints, the opportunities, and the pace of change. We don't import Silicon Valley playbooks — we write our own.</p>
+      </div>
+      <div class="card" data-reveal="up" data-d="2">
+        <div class="card-ico red"><i class="fa-solid fa-network-wired"></i></div>
+        <h4 class="mb-12" style="font-size:1.05rem">Integrated Ecosystem</h4>
+        <p class="small" style="color:var(--white-60);line-height:1.75">Our three pillars reinforce each other. Products feed communities. Communities support startups. Startups build more products. It's a compounding flywheel.</p>
+      </div>
+      <div class="card" data-reveal="up" data-d="3">
+        <div class="card-ico green"><i class="fa-solid fa-bolt-lightning"></i></div>
+        <h4 class="mb-12" style="font-size:1.05rem">Speed Without Shortcuts</h4>
+        <p class="small" style="color:var(--white-60);line-height:1.75">We move fast — but we don't cut corners on quality, design, or craft. Speed and excellence are not mutually exclusive. We prove it every day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section class="sec" style="padding-top:0">
+  <div class="container">
+    <div style="background:var(--glass-w);border:1px solid var(--glass-border);border-radius:var(--r-2xl);padding:clamp(48px,7vw,90px) clamp(24px,5vw,64px);text-align:center;position:relative;overflow:hidden" data-reveal="scale">
+      <div class="orb orb-blue" style="width:500px;height:500px;bottom:-50%;left:50%;transform:translateX(-50%);opacity:.35" aria-hidden="true"></div>
+      <div style="position:relative;z-index:1">
+        <span class="badge" style="margin-bottom:22px"><span class="bdot"></span> Let's Build</span>
+        <h2 class="d-md" style="margin-bottom:18px">Ready to start?</h2>
+        <p class="lead" style="max-width:480px;margin:0 auto 36px">Tell us about your project, your community, or your startup. We'll figure out exactly how Brivent can help.</p>
+        <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap">
+          <a href="contact.html" class="btn btn-primary btn-xl" data-mag>Start a Conversation <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="products.html" class="btn btn-glass btn-xl" data-mag>See Our Products</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <img src="brivent.png" alt="Brivent">
+        <p>Building the infrastructure that powers the next generation of ventures. From Lagos to the world.</p>
+        <div class="footer__socials">
+          <a href="#" class="soc-btn" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" class="soc-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" class="soc-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="soc-btn" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h6>Company</h6>
+        <ul class="footer__links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h6>Services</h6>
+        <ul class="footer__links">
+          <li><a href="#product-dev">Product Development</a></li>
+          <li><a href="#community">Community Building</a></li>
+          <li><a href="#startup">Startup Support</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h6>Connect</h6>
+        <ul class="footer__links">
+          <li><a href="mailto:hello@brivent.co"><i class="fa-regular fa-envelope" style="width:14px;color:var(--persian)"></i>&nbsp; hello@brivent.co</a></li>
+          <li><a href="#"><i class="fa-solid fa-globe" style="width:14px;color:var(--persian)"></i>&nbsp; brivent.co</a></li>
+          <li><a href="#"><i class="fa-solid fa-location-dot" style="width:14px;color:var(--persian)"></i>&nbsp; Lagos, Nigeria</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bar">
+      <p>&copy; 2024 Brivent. All rights reserved. Built with ambition.</p>
+      <p>Lagos, Nigeria &middot; Remote Worldwide</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

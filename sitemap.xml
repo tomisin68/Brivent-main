@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  
+  <!-- Homepage - Highest Priority -->
+  <url>
+    <loc>https://www.brivent.co/</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.brivent.co/" xmlns:xhtml="http://www.w3.org/1999/xhtml"/>
+    <image:image>
+      <image:loc>https://www.brivent.co/brivent.png</image:loc>
+      <image:title>Brivent - The Infrastructure of Ambition</image:title>
+      <image:caption>Brivent parent company building products, platforms, and early-stage ventures</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- About Page -->
+  <url>
+    <loc>https://www.brivent.co/#about</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.brivent.co/#about" xmlns:xhtml="http://www.w3.org/1999/xhtml"/>
+  </url>
+  
+  <!-- Services / What We Do -->
+  <url>
+    <loc>https://www.brivent.co/#services</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.brivent.co/#services" xmlns:xhtml="http://www.w3.org/1999/xhtml"/>
+  </url>
+  
+  <!-- Products Section -->
+  <url>
+    <loc>https://www.brivent.co/#products</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.brivent.co/#products" xmlns:xhtml="http://www.w3.org/1999/xhtml"/>
+  </url>
+  
+  <!-- Contact Page -->
+  <url>
+    <loc>https://www.brivent.co/#contact</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.brivent.co/#contact" xmlns:xhtml="http://www.w3.org/1999/xhtml"/>
+  </url>
+  
+  <!-- WhatsApp Automation Product Page -->
+  <url>
+    <loc>https://www.brivent.co/products/whatsapp-automation</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7</image:loc>
+      <image:title>WhatsApp Automation Platform</image:title>
+      <image:caption>SaaS platform for business WhatsApp automation and lead nurturing</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Kinnoc Product Page -->
+  <url>
+    <loc>https://www.brivent.co/products/kinnoc</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1522071820081-009f0129c71c</image:loc>
+      <image:title>Kinnoc Community Platform</image:title>
+      <image:caption>Community and connection platform bridging people, ideas, and opportunities</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- BIIT Product Page -->
+  <url>
+    <loc>https://www.brivent.co/products/biit</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1519389950473-47ba0277781c</image:loc>
+      <image:title>BIIT Tech Community</image:title>
+      <image:caption>Tech community for builders, developers, and innovators</image:caption>
+    </image:image>
+  </url>
+  
+</urlset>

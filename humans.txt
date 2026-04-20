@@ -1,0 +1,18 @@
+# humans.txt
+# Brivent - The Infrastructure of Ambition
+
+/* TEAM */
+  Company: Brivent
+  Website: https://www.brivent.co
+  Email: hello@brivent.co
+  Location: Lagos, Nigeria
+
+/* THANKS */
+  Built with intention for ambitious builders worldwide.
+
+/* TECHNOLOGY */
+  HTML5, CSS3, JavaScript, Formspree, Unsplash API
+  Fonts: Clash Display, Bricolage Grotesque
+
+/* LAST UPDATED */
+  2026-03-25

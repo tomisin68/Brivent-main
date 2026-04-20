@@ -1,0 +1,240 @@
+# Brivent.com Robots.txt File
+# Version: 2.0 | Last Updated: 2025-03-25
+# Optimized for Google, Bing, Yahoo, Yandex, Baidu, and all major search engines
+
+# ==============================================
+# GLOBAL DIRECTIVES - All User Agents
+# ==============================================
+
+User-agent: *
+# Allow crawling of all important content
+Allow: /
+
+# Disallow crawling of admin and system directories
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /logs/
+Disallow: /backup/
+Disallow: /config/
+
+# Disallow crawling of private user data paths
+Disallow: /private/
+Disallow: /internal/
+Disallow: /dev/
+
+# Disallow crawling of API endpoints and dynamic parameters
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /*?*
+Disallow: /?*
+
+# Prevent crawling of authentication pages
+Disallow: /login
+Disallow: /logout
+Disallow: /signup
+Disallow: /register
+Disallow: /reset-password
+Disallow: /forgot-password
+
+# Disallow crawling of assets that don't need indexing
+Disallow: /assets/email-templates/
+Disallow: /assets/fonts/
+Disallow: /temp/
+Disallow: /cache/
+Disallow: /uploads/temp/
+
+# Prevent crawling of duplicate content sections
+Disallow: /*/print/
+Disallow: /*/pdf/
+Disallow: /*/archive/
+
+# Allow bots to access core CSS and JS for rendering
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /assets/images/
+Allow: /brivent.png$
+Allow: /favicon.png$
+
+# ==============================================
+# CRAWL DELAY - Rate limiting for bots
+# ==============================================
+
+# Respectful crawl delay to prevent server overload
+Crawl-delay: 1
+
+# ==============================================
+# SITEMAP LOCATIONS
+# ==============================================
+
+Sitemap: https://www.brivent.co/sitemap.xml
+Sitemap: https://www.brivent.co/sitemap-products.xml
+Sitemap: https://www.brivent.co/sitemap-index.xml
+
+# ==============================================
+# GOOGLE SPECIFIC DIRECTIVES
+# ==============================================
+
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Crawl-delay: 0.5
+
+# Google Image Bot
+User-agent: Googlebot-Image
+Allow: /assets/images/
+Allow: /brivent.png$
+Disallow: /private/
+Disallow: /admin/
+
+# Google News Bot
+User-agent: Googlebot-News
+Allow: /
+Disallow: /admin/
+
+# Google Video Bot
+User-agent: Googlebot-Video
+Allow: /
+Disallow: /private/
+
+# ==============================================
+# BING / YAHOO / MICROSOFT DIRECTIVES
+# ==============================================
+
+User-agent: bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Crawl-delay: 1
+
+User-agent: MSNBot
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+# ==============================================
+# YANDEX DIRECTIVES
+# ==============================================
+
+User-agent: Yandex
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Crawl-delay: 1
+Host: https://www.brivent.co
+
+# Yandex Images Bot
+User-agent: YandexImages
+Allow: /assets/images/
+Allow: /brivent.png$
+
+# ==============================================
+# BAIDU (CHINESE SEARCH ENGINE)
+# ==============================================
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Crawl-delay: 2
+
+# ==============================================
+# DUCKDUCKGO
+# ==============================================
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Crawl-delay: 1
+
+# ==============================================
+# SOCIAL MEDIA BOTS (For Open Graph and Rich Previews)
+# ==============================================
+
+User-agent: Twitterbot
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+User-agent: FacebookBot
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+User-agent: LinkedInBot
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+User-agent: Pinterestbot
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+User-agent: Slackbot
+Allow: /
+Disallow: /admin/
+
+User-agent: Discordbot
+Allow: /
+Disallow: /admin/
+
+# ==============================================
+# ARCHIVE AND RESEARCH BOTS (Limited Access)
+# ==============================================
+
+User-agent: archive.org_bot
+Allow: /
+Crawl-delay: 5
+
+User-agent: ia_archiver
+Allow: /
+Crawl-delay: 5
+
+# ==============================================
+# BLOCK MALICIOUS BOTS (Known Bad Bots)
+# ==============================================
+
+User-agent: AhrefsBot
+Disallow: /
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Disallow: /
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Disallow: /
+Crawl-delay: 10
+
+User-agent: DotBot
+Disallow: /
+Crawl-delay: 10
+
+User-agent: JamesBOT
+Disallow: /
+Crawl-delay: 10
+
+User-agent: Xenu
+Disallow: /
+
+# ==============================================
+# CATCH-ALL FOR UNKNOWN BOTS
+# ==============================================
+
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Allow: /
+Crawl-delay: 1
+
+# ==============================================
+# END OF ROBOTS.TXT
+# ==============================================

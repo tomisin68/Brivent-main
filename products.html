@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products — Brivent</title>
+  <meta name="description" content="Brivent's active ventures: WhatsAuto, Kinnoc, and BIIT — products solving real problems across Africa and beyond.">
+  <link rel="icon" href="favicon.jpg" type="image/jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .p-hero { padding:calc(90px + clamp(60px,8vw,100px)) 0 clamp(60px,8vw,100px); position:relative; overflow:hidden; }
+    .p-hero__label { font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--persian);margin-bottom:20px;display:block; }
+    /* Product feature sections */
+    .prod-section {
+      padding: clamp(70px,9vw,110px) 0;
+      border-top: 1px solid var(--glass-border);
+      position: relative;
+      overflow: hidden;
+    }
+    .prod-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: clamp(48px, 8vw, 100px);
+      align-items: center;
+    }
+    .prod-layout.rev { direction:rtl; }
+    .prod-layout.rev > * { direction:ltr; }
+    .prod-hero-img {
+      position: relative;
+      border-radius: var(--r-2xl);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+    .prod-hero-img img { width:100%;height:100%;object-fit:cover;filter:brightness(.72) saturate(.75); transition:transform var(--t-slow) var(--ease); }
+    .prod-hero-img:hover img { transform:scale(1.04); }
+    .prod-hero-img::before {
+      content:''; position:absolute;inset:0;
+      background:linear-gradient(135deg,rgba(21,43,249,.22),rgba(3,3,45,.55));
+      z-index:1;
+    }
+    .prod-hero-img__overlay {
+      position:absolute; inset:0; z-index:2;
+      padding:28px;
+      display:flex; flex-direction:column; justify-content:flex-end;
+    }
+    .prod-status {
+      position:absolute; top:24px; right:24px; z-index:3;
+    }
+    .prod-meta-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+    /* Stat row */
+    .prod-stats { display:flex; gap:32px; flex-wrap:wrap; margin-top:32px; padding-top:28px; border-top:1px solid var(--glass-border); }
+    .prod-stat-item { text-align:center; }
+    .prod-stat-n { font-family:var(--font-display); font-size:clamp(1.4rem,2.5vw,2rem); font-weight:700; letter-spacing:-.04em; color:var(--white-c); display:block; }
+    .prod-stat-l { font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--white-40); font-weight:700; display:block; margin-top:2px; }
+    /* Features grid */
+    .feat-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:28px; }
+    .feat-item {
+      display:flex; align-items:flex-start; gap:12px;
+      padding:16px;
+      border-radius:var(--r-md);
+      background:var(--glass-w); border:1px solid var(--glass-border);
+      transition: border-color var(--t-med), background var(--t-med);
+    }
+    .feat-item:hover { border-color:rgba(215,215,255,.22); background:rgba(21,43,249,.06); }
+    .feat-item i { color:var(--persian); font-size:.85rem; margin-top:2px; flex-shrink:0; }
+    .feat-item span { font-size:.82rem; color:var(--white-80); line-height:1.6; }
+    /* All products grid */
+    .all-prods { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    /* Coming soon card */
+    .coming-card {
+      border-radius:var(--r-xl);
+      border: 1px dashed rgba(215,215,255,.2);
+      padding: 48px 40px;
+      text-align:center;
+      position:relative; overflow:hidden;
+    }
+    .coming-card__icon {
+      width:64px; height:64px; border-radius:50%;
+      background:var(--glass-w); border:1px solid var(--glass-border);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.4rem; color:var(--white-40);
+      margin:0 auto 20px;
+    }
+    @media (max-width:1024px){
+      .prod-layout { grid-template-columns:1fr; }
+      .prod-layout.rev { direction:ltr; }
+      .all-prods { grid-template-columns:1fr; }
+    }
+    @media (max-width:600px){
+      .feat-grid { grid-template-columns:1fr; }
+      .prod-stats { gap:20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
+<div class="loader" id="loader">
+  <div class="loader__logo"><img src="brivent.png" alt="Brivent"></div>
+  <div class="loader__bar"></div>
+</div>
+
+<nav class="nav" id="nav">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="brivent.png" alt="Brivent"></a>
+      <ul class="nav__links">
+        <li><a href="index.html"    class="nav__link">Home</a></li>
+        <li><a href="about.html"    class="nav__link">About</a></li>
+        <li><a href="services.html" class="nav__link">Services</a></li>
+        <li><a href="products.html" class="nav__link">Products</a></li>
+        <li><a href="contact.html"  class="nav__link">Contact</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="contact.html" class="btn btn-primary btn-sm" data-mag>Get in Touch <i class="fa-solid fa-arrow-right"></i></a>
+        <button class="nav__burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="m-menu" id="mMenu">
+  <ul class="m-menu__links">
+    <li><a href="index.html"    class="m-menu__link">Home</a></li>
+    <li><a href="about.html"    class="m-menu__link">About</a></li>
+    <li><a href="services.html" class="m-menu__link">Services</a></li>
+    <li><a href="products.html" class="m-menu__link">Products</a></li>
+    <li><a href="contact.html"  class="m-menu__link">Contact</a></li>
+  </ul>
+  <p class="m-menu__foot">&copy; 2024 Brivent &mdash; Lagos, Nigeria</p>
+</div>
+
+<!-- ══ PAGE HERO ══ -->
+<section class="p-hero">
+  <canvas id="particleCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0" aria-hidden="true"></canvas>
+  <div class="orb orb-blue"  style="width:500px;height:500px;top:-15%;right:-8%;opacity:.45" aria-hidden="true"></div>
+  <div class="orb orb-red"   style="width:320px;height:320px;bottom:-8%;left:-4%;opacity:.35" aria-hidden="true"></div>
+  <div class="grid-ovr" aria-hidden="true"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <span class="p-hero__label" data-reveal="up">Our Ventures</span>
+    <h1 class="d-lg" data-reveal="up" data-d="1">Products built<br>to <span style="color:var(--persian)">last.</span></h1>
+    <p class="lead" data-reveal="up" data-d="2" style="max-width:560px">Every Brivent product is born from a real problem, built with precision, and designed to grow. These aren't experiments — they're infrastructure.</p>
+    <div style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap" data-reveal="up" data-d="3">
+      <a href="#whatsauto" class="btn btn-glass btn-sm"><span class="bdot green" style="width:5px;height:5px"></span>&nbsp; WhatsAuto</a>
+      <a href="#kinnoc"    class="btn btn-glass btn-sm"><span class="bdot"       style="width:5px;height:5px"></span>&nbsp; Kinnoc</a>
+      <a href="#biit"      class="btn btn-glass btn-sm"><span class="bdot amber" style="width:5px;height:5px"></span>&nbsp; BIIT</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHATSAUTO ══ -->
+<section class="prod-section" id="whatsauto">
+  <div class="orb orb-blue" style="width:400px;height:400px;top:-20%;right:-10%;opacity:.3" aria-hidden="true"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="prod-layout">
+      <div data-reveal="left">
+        <div class="tags mb-20">
+          <span class="tag tag-green"><i class="fa-solid fa-circle" style="font-size:.4rem"></i> Live</span>
+          <span class="tag tag-chalk">SaaS</span>
+          <span class="tag tag-blue">Automation</span>
+          <span class="tag tag-chalk">WhatsApp</span>
+        </div>
+        <h2 class="d-lg mb-20" style="font-size:clamp(2.2rem,5vw,4.5rem)">WhatsAuto</h2>
+        <p class="lead" style="margin-bottom:20px">The WhatsApp sales system that turns your business conversations into a 24/7 revenue engine. Auto-replies, product showcases, and order management — all from your WhatsApp number.</p>
+        <p class="small" style="color:var(--white-60);line-height:1.85">Whether you're a restaurant taking orders, a vendor managing inventory, or a service business handling inquiries — WhatsAuto eliminates the manual work and keeps your customers engaged around the clock.</p>
+        <div class="feat-grid">
+          <div class="feat-item"><i class="fa-solid fa-robot"></i><span>Intelligent auto-reply flows for any business type</span></div>
+          <div class="feat-item"><i class="fa-solid fa-bag-shopping"></i><span>Product catalog with images, prices, and descriptions</span></div>
+          <div class="feat-item"><i class="fa-solid fa-clipboard-list"></i><span>Order tracking and management dashboard</span></div>
+          <div class="feat-item"><i class="fa-solid fa-chart-bar"></i><span>Customer analytics and conversation insights</span></div>
+          <div class="feat-item"><i class="fa-brands fa-whatsapp"></i><span>Native WhatsApp Business API integration</span></div>
+          <div class="feat-item"><i class="fa-solid fa-gear"></i><span>No-code setup — live in under 30 minutes</span></div>
+        </div>
+        <div class="prod-stats">
+          <div class="prod-stat-item">
+            <span class="prod-stat-n" data-count="30" data-suffix="min">30min</span>
+            <span class="prod-stat-l">Setup Time</span>
+          </div>
+          <div class="prod-stat-item">
+            <span class="prod-stat-n">24/7</span>
+            <span class="prod-stat-l">Availability</span>
+          </div>
+          <div class="prod-stat-item">
+            <span class="prod-stat-n" data-count="0">0</span>
+            <span class="prod-stat-l">Code Required</span>
+          </div>
+        </div>
+        <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
+          <a href="contact.html" class="btn btn-primary btn-lg" data-mag>Get Access <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="contact.html" class="btn btn-glass btn-lg" data-mag>Learn More</a>
+        </div>
+      </div>
+      <div class="prod-hero-img" data-reveal="right">
+        <img src="https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=900&q=80" alt="WhatsAuto — WhatsApp Sales System" loading="lazy">
+        <div class="prod-status">
+          <span class="badge" style="background:rgba(0,214,143,.12);border-color:rgba(0,214,143,.25);color:#00d68f"><span class="bdot green"></span> Live &amp; Active</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ KINNOC ══ -->
+<section class="prod-section" id="kinnoc">
+  <div class="orb orb-chalk" style="width:400px;height:400px;top:-15%;left:-10%;opacity:.25" aria-hidden="true"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="prod-layout rev">
+      <div data-reveal="right">
+        <div class="tags mb-20">
+          <span class="tag tag-blue"><i class="fa-solid fa-circle" style="font-size:.4rem"></i> Building</span>
+          <span class="tag tag-chalk">Platform</span>
+          <span class="tag tag-chalk">Community</span>
+          <span class="tag tag-chalk">Networking</span>
+        </div>
+        <h2 class="d-lg mb-20" style="font-size:clamp(2.2rem,5vw,4.5rem)">Kinnoc</h2>
+        <p class="lead" style="margin-bottom:20px">A community platform built to connect the right people with the right opportunities at the right time. For founders, builders, and creatives across Africa and beyond.</p>
+        <p class="small" style="color:var(--white-60);line-height:1.85">Kinnoc isn't just another social network. It's a structured ecosystem where connections have context — where a first-year developer can find a mentor, a founder can find a co-founder, and a builder can find their community.</p>
+        <div class="feat-grid">
+          <div class="feat-item"><i class="fa-solid fa-user-group"></i><span>Smart matching based on skills, interests, and goals</span></div>
+          <div class="feat-item"><i class="fa-solid fa-building"></i><span>Community spaces for teams, guilds, and groups</span></div>
+          <div class="feat-item"><i class="fa-solid fa-graduation-cap"></i><span>Mentorship connections and learning pathways</span></div>
+          <div class="feat-item"><i class="fa-solid fa-briefcase"></i><span>Opportunity board for jobs, projects, and collabs</span></div>
+          <div class="feat-item"><i class="fa-solid fa-calendar-check"></i><span>Events, workshops, and community challenges</span></div>
+          <div class="feat-item"><i class="fa-solid fa-map-location-dot"></i><span>Local and global ecosystem discovery</span></div>
+        </div>
+        <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
+          <a href="contact.html" class="btn btn-primary btn-lg" data-mag>Join Waitlist <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="contact.html" class="btn btn-glass btn-lg" data-mag>Learn More</a>
+        </div>
+      </div>
+      <div class="prod-hero-img" data-reveal="left">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900&q=80" alt="Kinnoc — Community Platform" loading="lazy">
+        <div class="prod-status">
+          <span class="badge" style="background:rgba(21,43,249,.12);border-color:rgba(21,43,249,.3);color:var(--persian)"><span class="bdot"></span> In Development</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BIIT ══ -->
+<section class="prod-section" id="biit">
+  <div class="orb orb-red" style="width:350px;height:350px;top:-15%;right:-8%;opacity:.25" aria-hidden="true"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="prod-layout">
+      <div data-reveal="left">
+        <div class="tags mb-20">
+          <span class="tag tag-amber"><i class="fa-solid fa-circle" style="font-size:.4rem"></i> Beta</span>
+          <span class="tag tag-chalk">Community</span>
+          <span class="tag tag-chalk">EdTech</span>
+          <span class="tag tag-chalk">Youth</span>
+        </div>
+        <h2 class="d-lg mb-20" style="font-size:clamp(2.2rem,5vw,4.5rem)">BIIT</h2>
+        <p class="lead" style="margin-bottom:20px"><strong>Be Involved In Tech.</strong> A community platform helping young Africans break into tech not through textbooks, but through real projects, real mentors, and real experience.</p>
+        <p class="small" style="color:var(--white-60);line-height:1.85">The gap between "wanting to learn tech" and "building a career in tech" is enormous in Africa. BIIT bridges that gap by connecting young people with a community that builds together — turning beginners into contributors through hands-on experience.</p>
+        <div class="feat-grid">
+          <div class="feat-item"><i class="fa-solid fa-laptop-code"></i><span>Hands-on project tracks in web, mobile, and data</span></div>
+          <div class="feat-item"><i class="fa-solid fa-person-chalkboard"></i><span>Mentorship from working professionals in tech</span></div>
+          <div class="feat-item"><i class="fa-solid fa-certificate"></i><span>Portfolio building through real-world projects</span></div>
+          <div class="feat-item"><i class="fa-solid fa-people-arrows"></i><span>Peer learning circles and accountability groups</span></div>
+          <div class="feat-item"><i class="fa-brands fa-github"></i><span>Open source contribution pathways</span></div>
+          <div class="feat-item"><i class="fa-solid fa-hand-holding-heart"></i><span>Fully free access for young learners</span></div>
+        </div>
+        <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
+          <a href="contact.html" class="btn btn-primary btn-lg" data-mag>Join Beta <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="contact.html" class="btn btn-glass btn-lg" data-mag>Learn More</a>
+        </div>
+      </div>
+      <div class="prod-hero-img" data-reveal="right">
+        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=900&q=80" alt="BIIT — Be Involved In Tech" loading="lazy">
+        <div class="prod-status">
+          <span class="badge" style="background:rgba(255,184,0,.1);border-color:rgba(255,184,0,.3);color:#ffb800"><span class="bdot amber"></span> Beta Access</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COMING SOON ══ -->
+<section class="sec">
+  <div class="container">
+    <div class="sec-hd ctr" data-reveal="up">
+      <span class="badge"><span class="bdot"></span> What's Next</span>
+      <h2 class="d-md mt-16">More on the horizon.</h2>
+      <p class="lead mt-16">We're always building. The ventures below are in early stages — watch this space.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px" data-reveal="up" data-d="2">
+      <div class="coming-card">
+        <div class="coming-card__icon"><i class="fa-solid fa-microchip"></i></div>
+        <h4 class="mb-8" style="font-size:1rem">Venture &mdash; TBA</h4>
+        <p class="small text-muted">A new SaaS product in early research phase. Focused on the African SME market.</p>
+      </div>
+      <div class="coming-card">
+        <div class="coming-card__icon"><i class="fa-solid fa-satellite-dish"></i></div>
+        <h4 class="mb-8" style="font-size:1rem">Platform &mdash; TBA</h4>
+        <p class="small text-muted">Infrastructure tooling for African developers. In early concept stage.</p>
+      </div>
+      <div class="coming-card">
+        <div class="coming-card__icon"><i class="fa-solid fa-plus"></i></div>
+        <h4 class="mb-8" style="font-size:1rem">Your Idea</h4>
+        <p class="small text-muted">Have a product idea that Brivent should build? We're always listening.</p>
+        <a href="contact.html" class="btn btn-glass btn-sm mt-16">Tell Us <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section class="sec" style="padding-top:0">
+  <div class="container">
+    <div style="background:var(--glass-w);border:1px solid var(--glass-border);border-radius:var(--r-2xl);padding:clamp(48px,7vw,90px) clamp(24px,5vw,64px);text-align:center;position:relative;overflow:hidden" data-reveal="scale">
+      <div class="orb orb-blue" style="width:500px;height:500px;top:-50%;left:50%;transform:translateX(-50%);opacity:.3" aria-hidden="true"></div>
+      <div style="position:relative;z-index:1">
+        <span class="badge" style="margin-bottom:22px"><span class="bdot"></span> Get Involved</span>
+        <h2 class="d-md" style="margin-bottom:18px">Want early access?</h2>
+        <p class="lead" style="max-width:460px;margin:0 auto 36px">Join the waitlist for any of our products, or reach out to discuss how Brivent's infrastructure can support your venture.</p>
+        <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap">
+          <a href="contact.html" class="btn btn-primary btn-xl" data-mag>Get in Touch <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="services.html" class="btn btn-glass btn-xl" data-mag>Our Services</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <img src="brivent.png" alt="Brivent">
+        <p>Building the infrastructure that powers the next generation of ventures. From Lagos to the world.</p>
+        <div class="footer__socials">
+          <a href="#" class="soc-btn" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" class="soc-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" class="soc-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="soc-btn" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h6>Company</h6>
+        <ul class="footer__links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h6>Products</h6>
+        <ul class="footer__links">
+          <li><a href="#whatsauto">WhatsAuto <span class="tag tag-green" style="font-size:.58rem;padding:2px 7px">Live</span></a></li>
+          <li><a href="#kinnoc">Kinnoc <span class="tag tag-blue" style="font-size:.58rem;padding:2px 7px">Building</span></a></li>
+          <li><a href="#biit">BIIT <span class="tag tag-amber" style="font-size:.58rem;padding:2px 7px">Beta</span></a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h6>Connect</h6>
+        <ul class="footer__links">
+          <li><a href="mailto:hello@brivent.co"><i class="fa-regular fa-envelope" style="width:14px;color:var(--persian)"></i>&nbsp; hello@brivent.co</a></li>
+          <li><a href="#"><i class="fa-solid fa-globe" style="width:14px;color:var(--persian)"></i>&nbsp; brivent.co</a></li>
+          <li><a href="#"><i class="fa-solid fa-location-dot" style="width:14px;color:var(--persian)"></i>&nbsp; Lagos, Nigeria</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bar">
+      <p>&copy; 2024 Brivent. All rights reserved. Built with ambition.</p>
+      <p>Lagos, Nigeria &middot; Remote Worldwide</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

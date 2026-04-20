@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Brivent</title>
+  <meta name="description" content="Get in touch with Brivent. Whether you're a founder, a builder, or a collaborator — we want to hear from you.">
+  <link rel="icon" href="favicon.jpg" type="image/jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .p-hero { padding:calc(90px + clamp(60px,8vw,100px)) 0 clamp(60px,8vw,100px); position:relative; overflow:hidden; }
+    .p-hero__label { font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--persian);margin-bottom:20px;display:block; }
+    /* Contact layout */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: clamp(40px, 7vw, 90px);
+      align-items: start;
+    }
+    /* Info column */
+    .info-cards { display:flex;flex-direction:column;gap:12px;margin-bottom:36px; }
+    .response-band {
+      padding: 20px 24px;
+      border-radius: var(--r-lg);
+      background: rgba(0,214,143,.07);
+      border: 1px solid rgba(0,214,143,.18);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .response-band i { color:#00d68f;font-size:1.1rem;flex-shrink:0; }
+    .response-band p  { font-size:.84rem;color:var(--white-80);line-height:1.5; }
+    .response-band strong { color:#00d68f; }
+    /* Social links */
+    .social-links { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }
+    .social-link {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 18px;
+      border-radius:var(--r-pill);
+      border:1px solid var(--glass-border);
+      background:var(--glass-w);
+      font-size:.78rem; font-weight:600; color:var(--white-60);
+      transition: all var(--t-med) var(--ease);
+    }
+    .social-link i { font-size:.85rem; }
+    .social-link:hover { border-color:var(--persian); color:var(--white-c); background:rgba(21,43,249,.08); transform:translateY(-2px); }
+    /* Form card */
+    .form-card {
+      background: var(--glass-w);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--r-2xl);
+      padding: clamp(32px,4vw,52px);
+      position: relative;
+      overflow: hidden;
+    }
+    .form-card::before {
+      content:''; position:absolute;top:0;left:0;right:0;
+      height:1px;
+      background:linear-gradient(90deg,transparent,rgba(21,43,249,.4),transparent);
+    }
+    /* Map placeholder */
+    .map-block {
+      border-radius:var(--r-xl);
+      overflow:hidden;
+      aspect-ratio:16/7;
+      position:relative;
+      border:1px solid var(--glass-border);
+      background:var(--deep-2);
+      display:flex; align-items:center; justify-content:center;
+      margin-top:clamp(60px,8vw,100px);
+    }
+    .map-block__inner { text-align:center; }
+    .map-block__inner i { font-size:2.5rem; color:var(--persian); margin-bottom:12px; opacity:.5; }
+    .map-block__inner p { font-size:.85rem; color:var(--white-40); }
+    .map-block__inner strong { display:block; font-family:var(--font-display); font-size:1.2rem; color:var(--white-60); margin-bottom:6px; }
+    .map-pin {
+      position:absolute; bottom:30%; left:50%; transform:translate(-50%,50%);
+    }
+    .map-pin__dot {
+      width:14px; height:14px; border-radius:50%;
+      background:var(--persian);
+      box-shadow:0 0 20px rgba(21,43,249,.8);
+      animation:map-pulse 2s ease infinite;
+    }
+    @keyframes map-pulse {
+      0%,100%{box-shadow:0 0 20px rgba(21,43,249,.8)}
+      50%{box-shadow:0 0 40px rgba(21,43,249,1),0 0 80px rgba(21,43,249,.4)}
+    }
+    .map-grid {
+      position:absolute;inset:0;
+      background-image:
+        linear-gradient(rgba(21,43,249,.06) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(21,43,249,.06) 1px,transparent 1px);
+      background-size:48px 48px;
+    }
+    @media (max-width:1024px){
+      .contact-layout { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
+<div class="loader" id="loader">
+  <div class="loader__logo"><img src="brivent.png" alt="Brivent"></div>
+  <div class="loader__bar"></div>
+</div>
+
+<nav class="nav" id="nav">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="brivent.png" alt="Brivent"></a>
+      <ul class="nav__links">
+        <li><a href="index.html"    class="nav__link">Home</a></li>
+        <li><a href="about.html"    class="nav__link">About</a></li>
+        <li><a href="services.html" class="nav__link">Services</a></li>
+        <li><a href="products.html" class="nav__link">Products</a></li>
+        <li><a href="contact.html"  class="nav__link">Contact</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="contact.html" class="btn btn-primary btn-sm" data-mag>Get in Touch <i class="fa-solid fa-arrow-right"></i></a>
+        <button class="nav__burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="m-menu" id="mMenu">
+  <ul class="m-menu__links">
+    <li><a href="index.html"    class="m-menu__link">Home</a></li>
+    <li><a href="about.html"    class="m-menu__link">About</a></li>
+    <li><a href="services.html" class="m-menu__link">Services</a></li>
+    <li><a href="products.html" class="m-menu__link">Products</a></li>
+    <li><a href="contact.html"  class="m-menu__link">Contact</a></li>
+  </ul>
+  <p class="m-menu__foot">&copy; 2024 Brivent &mdash; Lagos, Nigeria</p>
+</div>
+
+<!-- ══ PAGE HERO ══ -->
+<section class="p-hero">
+  <div class="orb orb-blue"  style="width:600px;height:600px;top:-25%;right:-10%;opacity:.5" aria-hidden="true"></div>
+  <div class="orb orb-red"   style="width:350px;height:350px;bottom:-10%;left:-5%;opacity:.35" aria-hidden="true"></div>
+  <div class="grid-ovr" aria-hidden="true"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <span class="p-hero__label" data-reveal="up">Get in Touch</span>
+    <h1 class="d-lg" data-reveal="up" data-d="1">Let's build<br><span style="color:var(--persian)">together.</span></h1>
+    <p class="lead" data-reveal="up" data-d="2" style="max-width:540px">Whether you're a founder with a vision, a builder looking for community, or an organization that wants to collaborate — we want to hear from you.</p>
+  </div>
+</section>
+
+<!-- ══ CONTACT SECTION ══ -->
+<section class="sec" style="padding-top:0">
+  <div class="container">
+    <div class="contact-layout">
+      <!-- Info -->
+      <div data-reveal="left">
+        <h2 class="d-sm mb-24">Start a conversation.</h2>
+        <div class="info-cards">
+          <div class="info-card">
+            <div class="info-ico"><i class="fa-regular fa-envelope"></i></div>
+            <div>
+              <h5>Email</h5>
+              <p><a href="mailto:hello@brivent.co" style="color:var(--white-c);transition:color var(--t-fast)" onmouseover="this.style.color='var(--persian)'" onmouseout="this.style.color='var(--white-c)'">hello@brivent.co</a></p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-ico"><i class="fa-solid fa-globe"></i></div>
+            <div>
+              <h5>Website</h5>
+              <p>brivent.co</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-ico"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <h5>Headquarters</h5>
+              <p>Lagos, Nigeria</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-ico"><i class="fa-solid fa-wifi"></i></div>
+            <div>
+              <h5>Operations</h5>
+              <p>Remote Worldwide</p>
+            </div>
+          </div>
+        </div>
+        <div class="response-band">
+          <i class="fa-solid fa-clock"></i>
+          <p><strong>Typically within 48 hours.</strong> We read every message and respond personally.</p>
+        </div>
+        <div>
+          <p class="caption mt-24 mb-16" style="color:var(--white-40)">Follow our journey</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fa-brands fa-x-twitter"></i> Twitter</a>
+            <a href="#" class="social-link"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+            <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i> Instagram</a>
+            <a href="#" class="social-link"><i class="fa-brands fa-github"></i> GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="form-card" data-reveal="right">
+        <h3 class="d-xs mb-8">Send us a message</h3>
+        <p class="small" style="color:var(--white-60);margin-bottom:28px">Tell us about yourself and what you're working on.</p>
+        <div id="formMsg" class="form-msg"></div>
+        <form id="contactForm" action="https://formspree.io/f/mreozvne" method="POST" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="first_name">First Name</label>
+              <input type="text" id="first_name" name="first_name" placeholder="Your first name" required>
+            </div>
+            <div class="form-group">
+              <label for="last_name">Last Name</label>
+              <input type="text" id="last_name" name="last_name" placeholder="Your last name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="topic">What's this about?</label>
+            <select id="topic" name="topic" required>
+              <option value="" disabled selected>Select a topic</option>
+              <option value="product-inquiry">Product Inquiry (WhatsAuto / Kinnoc / BIIT)</option>
+              <option value="partnership">Partnership Opportunity</option>
+              <option value="startup-support">Startup Support</option>
+              <option value="community">Community Building</option>
+              <option value="media">Media &amp; Press</option>
+              <option value="general">General Inquiry</option>
+              <option value="other">Something Else</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" placeholder="Tell us about your project, idea, or how we can help..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-full" style="justify-content:center;width:100%" data-mag>
+            Send Message <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Map block -->
+    <div class="map-block" data-reveal="up">
+      <div class="map-grid" aria-hidden="true"></div>
+      <div class="map-pin" aria-hidden="true"><div class="map-pin__dot"></div></div>
+      <div class="map-block__inner" style="position:relative;z-index:1">
+        <i class="fa-solid fa-location-pin"></i>
+        <strong>Lagos, Nigeria</strong>
+        <p>West Africa's tech capital &mdash; home of Brivent HQ</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ SECTION ══ -->
+<section class="sec" style="padding-top:0">
+  <div class="container">
+    <div class="sec-hd ctr" data-reveal="up">
+      <span class="badge"><span class="bdot"></span> FAQ</span>
+      <h2 class="d-md mt-16">Common questions.</h2>
+    </div>
+    <div style="max-width:720px;margin:0 auto" data-reveal="up" data-d="2">
+      <div class="steps">
+        <div class="step">
+          <div class="step__num"><i class="fa-solid fa-question" style="font-size:.65rem"></i></div>
+          <div class="step__body">
+            <h4>What kind of projects does Brivent take on?</h4>
+            <p>We focus on digital products, community platforms, and startup infrastructure. We're especially interested in projects that serve African markets or have a clear social impact alongside commercial viability.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__num"><i class="fa-solid fa-question" style="font-size:.65rem"></i></div>
+          <div class="step__body">
+            <h4>How do I get early access to WhatsAuto, Kinnoc, or BIIT?</h4>
+            <p>Fill out the contact form above, select the relevant product inquiry, and tell us a bit about your use case. We'll get back to you within 48 hours with next steps.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__num"><i class="fa-solid fa-question" style="font-size:.65rem"></i></div>
+          <div class="step__body">
+            <h4>Is Brivent open to investment or partnership?</h4>
+            <p>Yes — we're selectively open to partnerships and investment conversations that align with our mission. Reach out via the form with "Partnership Opportunity" selected and tell us more about your interest.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__num"><i class="fa-solid fa-question" style="font-size:.65rem"></i></div>
+          <div class="step__body">
+            <h4>Can I join the Brivent team?</h4>
+            <p>We're always interested in meeting exceptional builders, designers, and community architects. Send us your story and what you'd want to work on — we'll keep it on file and reach out when the right opportunity opens.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <img src="brivent.png" alt="Brivent">
+        <p>Building the infrastructure that powers the next generation of ventures. From Lagos to the world.</p>
+        <div class="footer__socials">
+          <a href="#" class="soc-btn" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" class="soc-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" class="soc-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="soc-btn" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h6>Company</h6>
+        <ul class="footer__links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h6>Products</h6>
+        <ul class="footer__links">
+          <li><a href="products.html">WhatsAuto</a></li>
+          <li><a href="products.html">Kinnoc</a></li>
+          <li><a href="products.html">BIIT</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h6>Connect</h6>
+        <ul class="footer__links">
+          <li><a href="mailto:hello@brivent.co"><i class="fa-regular fa-envelope" style="width:14px;color:var(--persian)"></i>&nbsp; hello@brivent.co</a></li>
+          <li><a href="#"><i class="fa-solid fa-globe" style="width:14px;color:var(--persian)"></i>&nbsp; brivent.co</a></li>
+          <li><a href="#"><i class="fa-solid fa-location-dot" style="width:14px;color:var(--persian)"></i>&nbsp; Lagos, Nigeria</a></li>
+          <li><a href="#"><i class="fa-solid fa-wifi" style="width:14px;color:var(--persian)"></i>&nbsp; Remote Worldwide</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bar">
+      <p>&copy; 2024 Brivent. All rights reserved. Built with ambition.</p>
+      <p>Lagos, Nigeria &middot; Remote Worldwide</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

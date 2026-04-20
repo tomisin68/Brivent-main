@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brivent — The Infrastructure of Ambition</title>
+  <meta name="description" content="Brivent creates products, platforms, and ecosystems where ambitious builders thrive. From Lagos to the world.">
+  <link rel="icon" href="favicon.jpg" type="image/jpeg">
+  <link rel="apple-touch-icon" href="brivent.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      padding-top: 100px;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero__content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 40px;
+      padding-bottom: 60px;
+      position: relative;
+      z-index: 2;
+      max-width: 920px;
+    }
+    .hero__eyebrow { margin-bottom: 30px; }
+    .hero__title {
+      font-size: clamp(3.2rem, 7.8vw, 9rem);
+      font-weight: 700;
+      letter-spacing: -.05em;
+      line-height: 1.0;
+      margin-bottom: 30px;
+    }
+    .hero__title .line { display: block; overflow: hidden; }
+    .hero__title .line span {
+      display: block;
+      animation: line-in .9s cubic-bezier(.22,1,.36,1) both;
+    }
+    .hero__title .line:nth-child(1) span { animation-delay: .1s; }
+    .hero__title .line:nth-child(2) span { animation-delay: .22s; }
+    @keyframes line-in {
+      from { transform: translateY(105%); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .hero__sub {
+      max-width: 540px;
+      margin-bottom: 42px;
+      animation: f-up .9s cubic-bezier(.22,1,.36,1) .45s both;
+    }
+    .hero__ctas {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      animation: f-up .9s cubic-bezier(.22,1,.36,1) .58s both;
+    }
+    @keyframes f-up {
+      from { opacity: 0; transform: translateY(26px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero__stats-bar {
+      position: relative; z-index: 2;
+      border-top: 1px solid var(--glass-border);
+      background: rgba(3,3,45,.55);
+      backdrop-filter: blur(22px);
+      padding: 28px 0;
+      animation: f-up .9s cubic-bezier(.22,1,.36,1) .72s both;
+    }
+    .h-stats { display: flex; align-items: stretch; }
+    .h-stat {
+      flex: 1; text-align: center;
+      padding: 4px 20px;
+      position: relative;
+    }
+    .h-stat + .h-stat::before {
+      content:''; position:absolute; left:0; top:50%;
+      transform:translateY(-50%);
+      width:1px; height:38px;
+      background: var(--glass-border);
+    }
+    .h-stat-val {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.8rem);
+      font-weight: 700; letter-spacing:-.04em; line-height:1;
+      display: block; color: var(--white-c); margin-bottom:5px;
+    }
+    .h-stat-lbl {
+      font-size:.64rem; letter-spacing:.14em;
+      text-transform:uppercase; color:var(--white-40);
+      font-weight:700; display:block;
+    }
+    .hero__scroll {
+      position:absolute; bottom:40px; left:50%;
+      transform:translateX(-50%);
+      z-index:2;
+      animation: f-up 1s .9s both;
+    }
+    /* About split */
+    .abt-split {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:clamp(40px,8vw,100px);
+      align-items:center;
+    }
+    .abt-img {
+      position:relative; border-radius:var(--r-xl);
+      overflow:hidden; aspect-ratio:4/3.2;
+    }
+    .abt-img img { width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(.75); }
+    .abt-img::before {
+      content:''; position:absolute;inset:0;
+      background:linear-gradient(135deg,rgba(21,43,249,.25),rgba(3,3,45,.5));
+      z-index:1;
+    }
+    .abt-float-card {
+      position:absolute;bottom:24px;left:24px;
+      background:rgba(3,3,45,.85); backdrop-filter:blur(16px);
+      border:1px solid var(--glass-border); border-radius:var(--r-md);
+      padding:16px 20px; z-index:2; min-width:170px;
+    }
+    .abt-float-card p { font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white-40);font-weight:700;margin-bottom:3px; }
+    .abt-float-card span { font-family:var(--font-display);font-size:1.3rem;font-weight:700;letter-spacing:-.02em; }
+    .abt-tag {
+      position:absolute;top:24px;right:24px;
+      background:rgba(21,43,249,.14); border:1px solid rgba(21,43,249,.28);
+      border-radius:var(--r-pill); padding:8px 14px; z-index:2;
+      font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+      color:var(--persian); backdrop-filter:blur(12px);
+    }
+    /* Services strip */
+    .svc-strip {
+      display:grid;grid-template-columns:repeat(3,1fr);
+      border:1px solid var(--glass-border); border-radius:var(--r-xl); overflow:hidden;
+    }
+    .svc-tile {
+      padding:clamp(28px,4vw,44px) clamp(22px,3vw,34px);
+      background:var(--glass-w); position:relative;
+      transition:background var(--t-med); overflow:hidden;
+    }
+    .svc-tile + .svc-tile { border-left:1px solid var(--glass-border); }
+    .svc-tile:hover { background:rgba(21,43,249,.06); }
+    .svc-tile__n {
+      font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+      color:var(--persian); margin-bottom:18px; display:block;
+    }
+    .svc-tile h3 { font-size:clamp(1.1rem,1.8vw,1.5rem); margin-bottom:12px; }
+    .svc-tile p  { font-size:.84rem;color:var(--white-60);line-height:1.7; }
+    .svc-arr {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:34px;height:34px; border-radius:50%;
+      border:1px solid var(--glass-border); color:var(--white-40);
+      font-size:.75rem; margin-top:22px;
+      transition:all var(--t-med) var(--ease);
+    }
+    .svc-tile:hover .svc-arr { border-color:var(--persian);color:var(--persian);transform:rotate(-45deg); }
+    /* Products grid */
+    .prod-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px; }
+    /* Numbers */
+    .nums-row { display:grid;grid-template-columns:repeat(4,1fr);gap:16px; }
+    /* CTA wrap */
+    .cta-box {
+      text-align:center;
+      padding:clamp(60px,9vw,110px) clamp(20px,5vw,60px);
+      border-radius:var(--r-2xl);
+      background:var(--glass-w); border:1px solid var(--glass-border);
+      position:relative; overflow:hidden;
+    }
+    .cta-box::before {
+      content:''; position:absolute;inset:0;
+      background:radial-gradient(ellipse 90% 70% at 50% 110%,rgba(21,43,249,.13),transparent);
+      z-index:0;
+    }
+    .cta-box > * { position:relative;z-index:1; }
+    .cta-btns { display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:36px; }
+    @media (max-width:1024px){
+      .abt-split{grid-template-columns:1fr}
+      .svc-strip{grid-template-columns:1fr;border-radius:var(--r-lg)}
+      .svc-tile+.svc-tile{border-left:none;border-top:1px solid var(--glass-border)}
+      .prod-grid{grid-template-columns:1fr}
+      .nums-row{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:768px){
+      .h-stats{flex-wrap:wrap;gap:20px}
+      .h-stat{flex:1 0 40%}
+      .h-stat+.h-stat::before{display:none}
+    }
+    @media (max-width:480px){
+      .nums-row{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<div class="loader" id="loader">
+  <div class="loader__logo"><img src="brivent.png" alt="Brivent"></div>
+  <div class="loader__bar"></div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="brivent.png" alt="Brivent"></a>
+      <ul class="nav__links">
+        <li><a href="index.html"    class="nav__link">Home</a></li>
+        <li><a href="about.html"    class="nav__link">About</a></li>
+        <li><a href="services.html" class="nav__link">Services</a></li>
+        <li><a href="products.html" class="nav__link">Products</a></li>
+        <li><a href="contact.html"  class="nav__link">Contact</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="contact.html" class="btn btn-primary btn-sm" data-mag>Get in Touch <i class="fa-solid fa-arrow-right"></i></a>
+        <button class="nav__burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="m-menu" id="mMenu">
+  <ul class="m-menu__links">
+    <li><a href="index.html"    class="m-menu__link">Home</a></li>
+    <li><a href="about.html"    class="m-menu__link">About</a></li>
+    <li><a href="services.html" class="m-menu__link">Services</a></li>
+    <li><a href="products.html" class="m-menu__link">Products</a></li>
+    <li><a href="contact.html"  class="m-menu__link">Contact</a></li>
+  </ul>
+  <p class="m-menu__foot">&copy; 2024 Brivent &mdash; Lagos, Nigeria</p>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <canvas id="gridCanvas" class="hero__canvas" aria-hidden="true"></canvas>
+  <div class="orb orb-blue"  style="width:700px;height:700px;top:-18%;right:-10%;opacity:.6" aria-hidden="true"></div>
+  <div class="orb orb-red"   style="width:420px;height:420px;bottom:-12%;left:-8%;opacity:.45" aria-hidden="true"></div>
+  <div class="orb orb-chalk" style="width:260px;height:260px;top:38%;left:38%;opacity:.35" aria-hidden="true"></div>
+  <div class="grid-ovr" aria-hidden="true"></div>
+
+  <div class="container hero__content">
+    <div class="hero__eyebrow">
+      <span class="badge"><span class="bdot"></span> Building From Lagos to the World</span>
+    </div>
+    <h1 class="hero__title">
+      <span class="line"><span>The Infrastructure</span></span>
+      <span class="line"><span>of <span style="color:var(--persian)">Ambition.</span></span></span>
+    </h1>
+    <p class="body-lg hero__sub">
+      Brivent creates products, platforms, and ecosystems where ambitious builders thrive. We give structure to the ideas that shape tomorrow.
+    </p>
+    <div class="hero__ctas">
+      <a href="products.html" class="btn btn-primary btn-lg" data-mag>Explore Products <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="about.html"    class="btn btn-glass btn-lg"   data-mag>Our Story <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+    </div>
+  </div>
+
+  <div class="hero__scroll"><div class="scroll-ind"><span>Scroll</span><i class="fa-solid fa-arrow-down"></i></div></div>
+
+  <div class="hero__stats-bar">
+    <div class="container">
+      <div class="h-stats">
+        <div class="h-stat">
+          <span class="h-stat-val" data-count="3" data-suffix="+">3+</span>
+          <span class="h-stat-lbl">Active Products</span>
+        </div>
+        <div class="h-stat">
+          <span class="h-stat-val">&infin;</span>
+          <span class="h-stat-lbl">Ideas Fueled</span>
+        </div>
+        <div class="h-stat">
+          <span class="h-stat-val" data-count="100" data-suffix="%">100%</span>
+          <span class="h-stat-lbl">Commitment</span>
+        </div>
+        <div class="h-stat">
+          <span class="h-stat-val">2024</span>
+          <span class="h-stat-lbl">Est. Lagos, NG</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MARQUEE ══ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <div class="marquee__item"><i class="fa-solid fa-circle"></i> Product Development <i class="fa-solid fa-circle"></i> Community Building <i class="fa-solid fa-circle"></i> WhatsApp Automation <i class="fa-solid fa-circle"></i> Startup Support <i class="fa-solid fa-circle"></i> Tech Education <i class="fa-solid fa-circle"></i> SaaS Platforms <i class="fa-solid fa-circle"></i> Ecosystem Design <i class="fa-solid fa-circle"></i> African Innovation <i class="fa-solid fa-circle"></i> Scalable Systems</div>
+    <div class="marquee__item"><i class="fa-solid fa-circle"></i> Product Development <i class="fa-solid fa-circle"></i> Community Building <i class="fa-solid fa-circle"></i> WhatsApp Automation <i class="fa-solid fa-circle"></i> Startup Support <i class="fa-solid fa-circle"></i> Tech Education <i class="fa-solid fa-circle"></i> SaaS Platforms <i class="fa-solid fa-circle"></i> Ecosystem Design <i class="fa-solid fa-circle"></i> African Innovation <i class="fa-solid fa-circle"></i> Scalable Systems</div>
+  </div>
+</div>
+
+<!-- ══ ABOUT TEASER ══ -->
+<section class="sec">
+  <div class="container">
+    <div class="abt-split">
+      <div>
+        <div class="sec-hd" data-reveal="up">
+          <span class="badge"><span class="bdot red"></span> Who We Are</span>
+          <h2 class="d-md mt-16">The ecosystem behind your next big idea.</h2>
+          <p class="lead mt-16">We don't just build products — we build the infrastructure that makes products possible. Brivent is a parent company creating ventures, platforms, and communities across Africa and beyond.</p>
+        </div>
+        <ul class="checklist" data-reveal="up" data-d="2">
+          <li><i class="fa-solid fa-circle-check"></i> Turning ambitious ideas into live, scalable products</li>
+          <li><i class="fa-solid fa-circle-check"></i> Supporting founders with tools, networks, and mentorship</li>
+          <li><i class="fa-solid fa-circle-check"></i> Building communities where builders learn and grow</li>
+          <li><i class="fa-solid fa-circle-check"></i> Operating from Lagos with a global vision</li>
+        </ul>
+        <div class="mt-32" data-reveal="up" data-d="3">
+          <a href="about.html" class="btn btn-outline" data-mag>Learn Our Story <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="abt-img" data-reveal="left" data-d="2">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80" alt="Brivent team collaborating" loading="lazy">
+        <div class="abt-float-card">
+          <p>Established</p>
+          <span>2024 &mdash; Lagos</span>
+        </div>
+        <div class="abt-tag"><i class="fa-solid fa-location-dot"></i> Lagos, Nigeria</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICES ══ -->
+<section class="sec" style="padding-top:0">
+  <div class="container">
+    <div class="sec-hd ctr" data-reveal="up">
+      <span class="badge"><span class="bdot"></span> What We Do</span>
+      <h2 class="d-md mt-16">Three pillars. <span class="text-blue">One mission.</span></h2>
+      <p class="lead mt-16">Everything we build at Brivent falls into three core areas — the pillars that hold up the infrastructure of ambition.</p>
+    </div>
+    <div class="svc-strip" data-reveal="up" data-d="2">
+      <div class="svc-tile">
+        <span class="svc-tile__n">01</span>
+        <div class="card-ico mb-16"><i class="fa-solid fa-layer-group"></i></div>
+        <h3>Product Development</h3>
+        <p>We build digital products from concept to deployment — SaaS tools, automation platforms, and scalable web applications.</p>
+        <a href="services.html" class="svc-arr" aria-label="Product Development"><i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="svc-tile">
+        <span class="svc-tile__n">02</span>
+        <div class="card-ico red mb-16"><i class="fa-solid fa-people-group"></i></div>
+        <h3>Community Building</h3>
+        <p>We create spaces where founders, students, and builders connect, collaborate, and grow together in ecosystems engineered for impact.</p>
+        <a href="services.html" class="svc-arr" aria-label="Community Building"><i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="svc-tile">
+        <span class="svc-tile__n">03</span>
+        <div class="card-ico green mb-16"><i class="fa-solid fa-rocket"></i></div>
+        <h3>Startup Support</h3>
+        <p>We provide early-stage ventures with the infrastructure they need — tools, mentorship, networks, and the structure to scale.</p>
+        <a href="services.html" class="svc-arr" aria-label="Startup Support"><i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRODUCTS ══ -->
+<section class="sec">
+  <div class="container">
+    <div class="sec-hd" data-reveal="up">
+      <span class="badge"><span class="bdot green"></span> Our Ventures</span>
+      <h2 class="d-md mt-16">Products we're building.</h2>
+      <p class="lead mt-16">Active ventures across automation, community, and tech education — each one solving a real problem.</p>
+    </div>
+    <div class="prod-grid">
+      <div class="p-card" data-reveal="up" data-d="1" data-tilt>
+        <div class="p-card__inner">
+          <div class="p-card__img">
+            <img src="https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=800&q=80" alt="WhatsAuto" loading="lazy">
+          </div>
+          <div class="p-card__body">
+            <div class="tags mb-16">
+              <span class="tag tag-green"><i class="fa-solid fa-circle" style="font-size:.4rem"></i> Live</span>
+              <span class="tag tag-chalk">SaaS</span>
+              <span class="tag tag-blue">Automation</span>
+            </div>
+            <h3 class="d-xs mb-12">WhatsAuto</h3>
+            <p class="small" style="color:var(--white-60);line-height:1.7;">A powerful WhatsApp sales system that automates replies, product recommendations, and order management for businesses of every size.</p>
+            <a href="products.html" class="btn btn-glass btn-sm mt-20" style="width:100%;justify-content:center">View Product <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="p-card" data-reveal="up" data-d="2" data-tilt>
+        <div class="p-card__inner">
+          <div class="p-card__img">
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80" alt="Kinnoc" loading="lazy">
+          </div>
+          <div class="p-card__body">
+            <div class="tags mb-16">
+              <span class="tag tag-blue"><i class="fa-solid fa-circle" style="font-size:.4rem"></i> Building</span>
+              <span class="tag tag-chalk">Platform</span>
+              <span class="tag tag-chalk">Community</span>
+            </div>
+            <h3 class="d-xs mb-12">Kinnoc</h3>
+            <p class="small" style="color:var(--white-60);line-height:1.7;">A community platform designed to connect people, ideas, and opportunities. Built for founders, students, and ambitious builders.</p>
+            <a href="products.html" class="btn btn-glass btn-sm mt-20" style="width:100%;justify-content:center">View Product <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="p-card" data-reveal="up" data-d="3" data-tilt>
+        <div class="p-card__inner">
+          <div class="p-card__img">
+            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80" alt="BIIT" loading="lazy">
+          </div>
+          <div class="p-card__body">
+            <div class="tags mb-16">
+              <span class="tag tag-amber"><i class="fa-solid fa-circle" style="font-size:.4rem"></i> Beta</span>
+              <span class="tag tag-chalk">Community</span>
+              <span class="tag tag-chalk">EdTech</span>
+            </div>
+            <h3 class="d-xs mb-12">BIIT</h3>
+            <p class="small" style="color:var(--white-60);line-height:1.7;">Be Involved In Tech — helping young Africans break into the industry through practical projects, mentorship, and real-world experience.</p>
+            <a href="products.html" class="btn btn-glass btn-sm mt-20" style="width:100%;justify-content:center">View Product <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-40" data-reveal="up">
+      <a href="products.html" class="btn btn-outline btn-lg" data-mag>See All Products <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ NUMBERS ══ -->
+<section class="sec" style="padding-top:0">
+  <div class="container">
+    <div class="nums-row">
+      <div class="stat-card" data-reveal="up" data-d="1"><div class="stat-val" data-count="3" data-suffix="+">3+</div><div class="stat-lbl">Active Products</div></div>
+      <div class="stat-card" data-reveal="up" data-d="2"><div class="stat-val">&infin;</div><div class="stat-lbl">Ideas Fueled</div></div>
+      <div class="stat-card" data-reveal="up" data-d="3"><div class="stat-val" data-count="100" data-suffix="%">100%</div><div class="stat-lbl">Commitment</div></div>
+      <div class="stat-card" data-reveal="up" data-d="4"><div class="stat-val">1</div><div class="stat-lbl">Clear Mission</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section class="sec">
+  <div class="container">
+    <div class="cta-box" data-reveal="scale">
+      <div class="orb orb-blue" style="width:500px;height:500px;top:-60%;left:50%;transform:translateX(-50%);opacity:.35" aria-hidden="true"></div>
+      <span class="badge" style="margin-bottom:24px"><span class="bdot"></span> Start Building</span>
+      <h2 class="d-md" style="margin-bottom:20px">Ready to build the <span class="text-blue">future</span>?</h2>
+      <p class="lead" style="max-width:500px;margin:0 auto">Whether you're a founder with a vision, a community builder, or a startup looking for infrastructure — Brivent is built for you.</p>
+      <div class="cta-btns">
+        <a href="contact.html" class="btn btn-primary btn-xl" data-mag>Get in Touch <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="products.html" class="btn btn-glass btn-xl" data-mag>Explore Products</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <img src="brivent.png" alt="Brivent">
+        <p>Building the infrastructure that powers the next generation of ventures. From Lagos to the world.</p>
+        <div class="footer__socials">
+          <a href="#" class="soc-btn" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" class="soc-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" class="soc-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="soc-btn" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h6>Company</h6>
+        <ul class="footer__links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h6>Products</h6>
+        <ul class="footer__links">
+          <li><a href="products.html">WhatsAuto</a></li>
+          <li><a href="products.html">Kinnoc</a></li>
+          <li><a href="products.html">BIIT</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h6>Connect</h6>
+        <ul class="footer__links">
+          <li><a href="mailto:hello@brivent.co"><i class="fa-regular fa-envelope" style="width:14px;color:var(--persian)"></i>&nbsp; hello@brivent.co</a></li>
+          <li><a href="#"><i class="fa-solid fa-globe" style="width:14px;color:var(--persian)"></i>&nbsp; brivent.co</a></li>
+          <li><a href="#"><i class="fa-solid fa-location-dot" style="width:14px;color:var(--persian)"></i>&nbsp; Lagos, Nigeria</a></li>
+          <li><a href="#"><i class="fa-solid fa-wifi" style="width:14px;color:var(--persian)"></i>&nbsp; Remote Worldwide</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bar">
+      <p>&copy; 2024 Brivent. All rights reserved. Built with ambition.</p>
+      <p>Lagos, Nigeria &middot; Remote Worldwide</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
