@@ -15,194 +15,139 @@
   <style>
     /* ── HERO ── */
     .hero {
-      min-height: 100svh;
-      padding-top: 100px;
-      display: grid;
-      grid-template-rows: 1fr auto;
-      position: relative;
-      overflow: hidden;
+      height: 100svh; min-height: 700px;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+      z-index: 1;
+    }
+    .hero__canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
     }
     .hero__content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-top: 40px;
-      padding-bottom: 60px;
-      position: relative;
-      z-index: 2;
-      max-width: 920px;
+      flex: 1; display: flex; flex-direction: column;
+      justify-content: center; padding-top: 100px;
+      position: relative; z-index: 2;
+      max-width: 880px;
     }
-    .hero__eyebrow { margin-bottom: 30px; }
+    .hero__badge { margin-bottom: 32px; animation: h-in .8s var(--ease) .1s both; }
     .hero__title {
-      font-size: clamp(3.2rem, 7.8vw, 9rem);
-      font-weight: 700;
-      letter-spacing: -.05em;
-      line-height: 1.0;
-      margin-bottom: 30px;
+      font-size: clamp(3rem, 8vw, 9.5rem);
+      font-weight: 700; letter-spacing: -.05em; line-height: .98;
+      margin-bottom: 32px;
     }
     .hero__title .line { display: block; overflow: hidden; }
-    .hero__title .line span {
-      display: block;
-      animation: line-in .9s cubic-bezier(.22,1,.36,1) both;
-    }
-    .hero__title .line:nth-child(1) span { animation-delay: .1s; }
-    .hero__title .line:nth-child(2) span { animation-delay: .22s; }
-    @keyframes line-in {
-      from { transform: translateY(105%); opacity: 0; }
-      to   { transform: translateY(0);    opacity: 1; }
-    }
-    .hero__sub {
-      max-width: 540px;
-      margin-bottom: 42px;
-      animation: f-up .9s cubic-bezier(.22,1,.36,1) .45s both;
-    }
-    .hero__ctas {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      animation: f-up .9s cubic-bezier(.22,1,.36,1) .58s both;
-    }
-    @keyframes f-up {
-      from { opacity: 0; transform: translateY(26px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .hero__stats-bar {
+    .hero__title .line span { display: block; animation: line-in .85s cubic-bezier(.22,1,.36,1) both; }
+    .hero__title .line:nth-child(1) span { animation-delay: .15s; }
+    .hero__title .line:nth-child(2) span { animation-delay: .28s; }
+    @keyframes line-in { from{transform:translateY(108%);opacity:0} to{transform:translateY(0);opacity:1} }
+    .hero__sub { max-width: 520px; margin-bottom: 44px; animation: h-in .85s var(--ease) .48s both; }
+    .hero__ctas { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; animation: h-in .85s var(--ease) .6s both; }
+    @keyframes h-in { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+    /* Stats bar */
+    .hero__statsbar {
       position: relative; z-index: 2;
       border-top: 1px solid var(--glass-border);
-      background: rgba(3,3,45,.55);
-      backdrop-filter: blur(22px);
-      padding: 28px 0;
-      animation: f-up .9s cubic-bezier(.22,1,.36,1) .72s both;
+      background: rgba(3,3,45,.6); backdrop-filter: blur(28px) saturate(1.5);
+      padding: 26px 0;
+      animation: h-in .85s var(--ease) .75s both;
     }
     .h-stats { display: flex; align-items: stretch; }
-    .h-stat {
-      flex: 1; text-align: center;
-      padding: 4px 20px;
-      position: relative;
-    }
-    .h-stat + .h-stat::before {
-      content:''; position:absolute; left:0; top:50%;
-      transform:translateY(-50%);
-      width:1px; height:38px;
-      background: var(--glass-border);
+    .h-stat { flex: 1; text-align: center; padding: 4px 16px; position: relative; }
+    .h-stat+.h-stat::before {
+      content:''; position:absolute; left:0; top:50%; transform:translateY(-50%);
+      width:1px; height:36px; background: var(--glass-border);
     }
     .h-stat-val {
-      font-family: var(--font-display);
-      font-size: clamp(1.6rem, 3vw, 2.8rem);
-      font-weight: 700; letter-spacing:-.04em; line-height:1;
-      display: block; color: var(--white-c); margin-bottom:5px;
+      font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.8rem);
+      font-weight: 700; letter-spacing: -.04em; line-height: 1;
+      display: block; color: var(--white-c); margin-bottom: 5px;
     }
-    .h-stat-lbl {
-      font-size:.64rem; letter-spacing:.14em;
-      text-transform:uppercase; color:var(--white-40);
-      font-weight:700; display:block;
-    }
+    .h-stat-lbl { font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--white-40); font-weight: 700; display: block; }
+    /* Scroll indicator */
     .hero__scroll {
-      position:absolute; bottom:40px; left:50%;
-      transform:translateX(-50%);
-      z-index:2;
-      animation: f-up 1s .9s both;
+      position: absolute; bottom: 120px; left: var(--pad);
+      z-index: 2; animation: h-in 1s .9s both;
     }
-    /* About split */
-    .abt-split {
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:clamp(40px,8vw,100px);
-      align-items:center;
+    /* About section */
+    .abt-split { display:grid; grid-template-columns:1fr 1fr; gap:clamp(40px,8vw,100px); align-items:center; }
+    .abt-img { position:relative; border-radius:var(--r-xl); overflow:hidden; aspect-ratio:4/3.2; }
+    .abt-img img { width:100%;height:100%;object-fit:cover;filter:brightness(.68) saturate(.72); }
+    .abt-img::before { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(21,43,249,.22),rgba(3,3,45,.5));z-index:1; }
+    .abt-img::after { content:'';position:absolute;inset:0;border:1px solid var(--glass-border);border-radius:inherit;z-index:3;pointer-events:none; }
+    .abt-chip {
+      position:absolute;bottom:22px;left:22px;z-index:4;
+      background:rgba(3,3,45,.88);backdrop-filter:blur(16px);
+      border:1px solid var(--glass-border);border-radius:var(--r-md);padding:14px 18px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
     }
-    .abt-img {
-      position:relative; border-radius:var(--r-xl);
-      overflow:hidden; aspect-ratio:4/3.2;
-    }
-    .abt-img img { width:100%;height:100%;object-fit:cover;filter:brightness(.7) saturate(.75); }
-    .abt-img::before {
-      content:''; position:absolute;inset:0;
-      background:linear-gradient(135deg,rgba(21,43,249,.25),rgba(3,3,45,.5));
-      z-index:1;
-    }
-    .abt-float-card {
-      position:absolute;bottom:24px;left:24px;
-      background:rgba(3,3,45,.85); backdrop-filter:blur(16px);
-      border:1px solid var(--glass-border); border-radius:var(--r-md);
-      padding:16px 20px; z-index:2; min-width:170px;
-    }
-    .abt-float-card p { font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white-40);font-weight:700;margin-bottom:3px; }
-    .abt-float-card span { font-family:var(--font-display);font-size:1.3rem;font-weight:700;letter-spacing:-.02em; }
-    .abt-tag {
-      position:absolute;top:24px;right:24px;
-      background:rgba(21,43,249,.14); border:1px solid rgba(21,43,249,.28);
-      border-radius:var(--r-pill); padding:8px 14px; z-index:2;
-      font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-      color:var(--persian); backdrop-filter:blur(12px);
+    .abt-chip p { font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white-40);font-weight:700;margin-bottom:3px; }
+    .abt-chip span { font-family:var(--font-display);font-size:1.25rem;font-weight:700;letter-spacing:-.02em; }
+    .abt-pin {
+      position:absolute;top:22px;right:22px;z-index:4;
+      background:rgba(21,43,249,.14);border:1px solid rgba(21,43,249,.3);border-radius:var(--r-pill);
+      padding:7px 13px;backdrop-filter:blur(12px);
+      font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--persian);
     }
     /* Services strip */
-    .svc-strip {
-      display:grid;grid-template-columns:repeat(3,1fr);
-      border:1px solid var(--glass-border); border-radius:var(--r-xl); overflow:hidden;
-    }
+    .svc-strip { display:grid;grid-template-columns:repeat(3,1fr); border:1px solid var(--glass-border); border-radius:var(--r-xl); overflow:hidden; }
     .svc-tile {
       padding:clamp(28px,4vw,44px) clamp(22px,3vw,34px);
-      background:var(--glass-w); position:relative;
-      transition:background var(--t-med); overflow:hidden;
+      background:linear-gradient(145deg,rgba(255,255,255,.05) 0%,rgba(21,43,249,.03) 100%);
+      position:relative; overflow:hidden;
+      transition:background var(--t-med); cursor:default;
     }
-    .svc-tile + .svc-tile { border-left:1px solid var(--glass-border); }
-    .svc-tile:hover { background:rgba(21,43,249,.06); }
-    .svc-tile__n {
-      font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
-      color:var(--persian); margin-bottom:18px; display:block;
-    }
-    .svc-tile h3 { font-size:clamp(1.1rem,1.8vw,1.5rem); margin-bottom:12px; }
-    .svc-tile p  { font-size:.84rem;color:var(--white-60);line-height:1.7; }
+    .svc-tile+.svc-tile { border-left:1px solid var(--glass-border); }
+    .svc-tile:hover { background:rgba(21,43,249,.07); }
+    .svc-tile__n { font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--persian);margin-bottom:18px;display:block; }
+    .svc-tile h3 { font-size:clamp(1.05rem,1.8vw,1.45rem);margin-bottom:12px; }
+    .svc-tile p  { font-size:.83rem;color:var(--white-60);line-height:1.7; }
     .svc-arr {
-      display:inline-flex; align-items:center; justify-content:center;
-      width:34px;height:34px; border-radius:50%;
-      border:1px solid var(--glass-border); color:var(--white-40);
-      font-size:.75rem; margin-top:22px;
+      display:inline-flex;align-items:center;justify-content:center;
+      width:32px;height:32px;border-radius:50%;border:1px solid var(--glass-border);
+      color:var(--white-40);font-size:.72rem;margin-top:22px;
       transition:all var(--t-med) var(--ease);
     }
-    .svc-tile:hover .svc-arr { border-color:var(--persian);color:var(--persian);transform:rotate(-45deg); }
-    /* Products grid */
+    .svc-tile:hover .svc-arr { border-color:var(--persian);color:var(--persian);transform:rotate(-45deg);box-shadow:0 0 12px rgba(21,43,249,.4); }
+    /* Products */
     .prod-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px; }
     /* Numbers */
     .nums-row { display:grid;grid-template-columns:repeat(4,1fr);gap:16px; }
-    /* CTA wrap */
+    /* CTA box */
     .cta-box {
-      text-align:center;
-      padding:clamp(60px,9vw,110px) clamp(20px,5vw,60px);
+      text-align:center; padding:clamp(60px,9vw,110px) clamp(20px,5vw,60px);
       border-radius:var(--r-2xl);
-      background:var(--glass-w); border:1px solid var(--glass-border);
-      position:relative; overflow:hidden;
+      background:linear-gradient(145deg,rgba(255,255,255,.05) 0%,rgba(21,43,249,.04) 100%);
+      border:1px solid var(--glass-border); position:relative; overflow:hidden;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 4px 40px rgba(0,0,0,.3);
     }
     .cta-box::before {
-      content:''; position:absolute;inset:0;
-      background:radial-gradient(ellipse 90% 70% at 50% 110%,rgba(21,43,249,.13),transparent);
-      z-index:0;
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse 90% 70% at 50% 110%,rgba(21,43,249,.14),transparent);z-index:0;
     }
-    .cta-box > * { position:relative;z-index:1; }
-    .cta-btns { display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:36px; }
-    @media (max-width:1024px){
+    .cta-box>*{position:relative;z-index:1;}
+    .cta-btns{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:36px;}
+    @media(max-width:1024px){
       .abt-split{grid-template-columns:1fr}
       .svc-strip{grid-template-columns:1fr;border-radius:var(--r-lg)}
       .svc-tile+.svc-tile{border-left:none;border-top:1px solid var(--glass-border)}
       .prod-grid{grid-template-columns:1fr}
       .nums-row{grid-template-columns:repeat(2,1fr)}
     }
-    @media (max-width:768px){
-      .h-stats{flex-wrap:wrap;gap:20px}
+    @media(max-width:768px){
+      .h-stats{flex-wrap:wrap;gap:16px}
       .h-stat{flex:1 0 40%}
       .h-stat+.h-stat::before{display:none}
+      .hero__scroll{display:none}
     }
-    @media (max-width:480px){
-      .nums-row{grid-template-columns:1fr}
-    }
+    @media(max-width:480px){ .nums-row{grid-template-columns:1fr} }
   </style>
 </head>
 <body>
 
 <div class="cur-dot" id="curDot"></div>
 <div class="cur-ring" id="curRing"></div>
-
 <div class="loader" id="loader">
   <div class="loader__logo"><img src="brivent.png" alt="Brivent"></div>
   <div class="loader__bar"></div>
@@ -228,7 +173,6 @@
   </div>
 </nav>
 
-<!-- MOBILE MENU -->
 <div class="m-menu" id="mMenu">
   <ul class="m-menu__links">
     <li><a href="index.html"    class="m-menu__link">Home</a></li>
@@ -240,21 +184,19 @@
   <p class="m-menu__foot">&copy; 2024 Brivent &mdash; Lagos, Nigeria</p>
 </div>
 
-<!-- ══ HERO ══ -->
+<!-- ═══ HERO ═══ -->
 <section class="hero">
-  <canvas id="gridCanvas" class="hero__canvas" aria-hidden="true"></canvas>
-  <div class="orb orb-blue"  style="width:700px;height:700px;top:-18%;right:-10%;opacity:.6" aria-hidden="true"></div>
-  <div class="orb orb-red"   style="width:420px;height:420px;bottom:-12%;left:-8%;opacity:.45" aria-hidden="true"></div>
-  <div class="orb orb-chalk" style="width:260px;height:260px;top:38%;left:38%;opacity:.35" aria-hidden="true"></div>
+  <!-- 3D PHYSICS CANVAS: icosahedron + orbital rings + deep space particles -->
+  <canvas id="scene3d" class="hero__canvas" aria-hidden="true"></canvas>
   <div class="grid-ovr" aria-hidden="true"></div>
 
   <div class="container hero__content">
-    <div class="hero__eyebrow">
+    <div class="hero__badge">
       <span class="badge"><span class="bdot"></span> Building From Lagos to the World</span>
     </div>
     <h1 class="hero__title">
       <span class="line"><span>The Infrastructure</span></span>
-      <span class="line"><span>of <span style="color:var(--persian)">Ambition.</span></span></span>
+      <span class="line"><span>of <span class="neon-blue" style="-webkit-text-fill-color:var(--persian)">Ambition.</span></span></span>
     </h1>
     <p class="body-lg hero__sub">
       Brivent creates products, platforms, and ecosystems where ambitious builders thrive. We give structure to the ideas that shape tomorrow.
@@ -265,9 +207,11 @@
     </div>
   </div>
 
-  <div class="hero__scroll"><div class="scroll-ind"><span>Scroll</span><i class="fa-solid fa-arrow-down"></i></div></div>
+  <div class="hero__scroll">
+    <div class="scroll-ind"><span>Scroll</span><i class="fa-solid fa-arrow-down"></i></div>
+  </div>
 
-  <div class="hero__stats-bar">
+  <div class="hero__statsbar">
     <div class="container">
       <div class="h-stats">
         <div class="h-stat">
@@ -291,7 +235,7 @@
   </div>
 </section>
 
-<!-- ══ MARQUEE ══ -->
+<!-- ═══ MARQUEE ═══ -->
 <div class="marquee" aria-hidden="true">
   <div class="marquee__track">
     <div class="marquee__item"><i class="fa-solid fa-circle"></i> Product Development <i class="fa-solid fa-circle"></i> Community Building <i class="fa-solid fa-circle"></i> WhatsApp Automation <i class="fa-solid fa-circle"></i> Startup Support <i class="fa-solid fa-circle"></i> Tech Education <i class="fa-solid fa-circle"></i> SaaS Platforms <i class="fa-solid fa-circle"></i> Ecosystem Design <i class="fa-solid fa-circle"></i> African Innovation <i class="fa-solid fa-circle"></i> Scalable Systems</div>
@@ -299,7 +243,7 @@
   </div>
 </div>
 
-<!-- ══ ABOUT TEASER ══ -->
+<!-- ═══ ABOUT TEASER ═══ -->
 <section class="sec">
   <div class="container">
     <div class="abt-split">
@@ -319,19 +263,19 @@
           <a href="about.html" class="btn btn-outline" data-mag>Learn Our Story <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
-      <div class="abt-img" data-reveal="left" data-d="2">
+      <div class="abt-img holo-shine scanlines hud-frame" data-reveal="left" data-d="2">
         <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80" alt="Brivent team collaborating" loading="lazy">
-        <div class="abt-float-card">
+        <div class="abt-chip">
           <p>Established</p>
           <span>2024 &mdash; Lagos</span>
         </div>
-        <div class="abt-tag"><i class="fa-solid fa-location-dot"></i> Lagos, Nigeria</div>
+        <div class="abt-pin"><i class="fa-solid fa-location-dot"></i> Lagos, Nigeria</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ SERVICES ══ -->
+<!-- ═══ SERVICES ═══ -->
 <section class="sec" style="padding-top:0">
   <div class="container">
     <div class="sec-hd ctr" data-reveal="up">
@@ -351,7 +295,7 @@
         <span class="svc-tile__n">02</span>
         <div class="card-ico red mb-16"><i class="fa-solid fa-people-group"></i></div>
         <h3>Community Building</h3>
-        <p>We create spaces where founders, students, and builders connect, collaborate, and grow together in ecosystems engineered for impact.</p>
+        <p>We create spaces where founders, students, and builders connect, collaborate, and grow in ecosystems engineered for impact.</p>
         <a href="services.html" class="svc-arr" aria-label="Community Building"><i class="fa-solid fa-arrow-right"></i></a>
       </div>
       <div class="svc-tile">
@@ -365,7 +309,7 @@
   </div>
 </section>
 
-<!-- ══ PRODUCTS ══ -->
+<!-- ═══ PRODUCTS ═══ -->
 <section class="sec">
   <div class="container">
     <div class="sec-hd" data-reveal="up">
@@ -374,53 +318,50 @@
       <p class="lead mt-16">Active ventures across automation, community, and tech education — each one solving a real problem.</p>
     </div>
     <div class="prod-grid">
-      <div class="p-card" data-reveal="up" data-d="1" data-tilt>
+      <div class="p-card holo-shine" data-reveal="up" data-d="1" data-tilt>
         <div class="p-card__inner">
-          <div class="p-card__img">
+          <div class="p-card__img scanlines hud-frame">
             <img src="https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=800&q=80" alt="WhatsAuto" loading="lazy">
           </div>
           <div class="p-card__body">
             <div class="tags mb-16">
               <span class="tag tag-green"><i class="fa-solid fa-circle" style="font-size:.4rem"></i> Live</span>
-              <span class="tag tag-chalk">SaaS</span>
-              <span class="tag tag-blue">Automation</span>
+              <span class="tag tag-chalk">SaaS</span><span class="tag tag-blue">Automation</span>
             </div>
             <h3 class="d-xs mb-12">WhatsAuto</h3>
-            <p class="small" style="color:var(--white-60);line-height:1.7;">A powerful WhatsApp sales system that automates replies, product recommendations, and order management for businesses of every size.</p>
+            <p class="small" style="color:var(--white-60);line-height:1.7">A powerful WhatsApp sales system that automates replies, product recommendations, and order management for businesses of every size.</p>
             <a href="products.html" class="btn btn-glass btn-sm mt-20" style="width:100%;justify-content:center">View Product <i class="fa-solid fa-arrow-right"></i></a>
           </div>
         </div>
       </div>
-      <div class="p-card" data-reveal="up" data-d="2" data-tilt>
+      <div class="p-card holo-shine" data-reveal="up" data-d="2" data-tilt>
         <div class="p-card__inner">
-          <div class="p-card__img">
+          <div class="p-card__img scanlines hud-frame">
             <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80" alt="Kinnoc" loading="lazy">
           </div>
           <div class="p-card__body">
             <div class="tags mb-16">
               <span class="tag tag-blue"><i class="fa-solid fa-circle" style="font-size:.4rem"></i> Building</span>
-              <span class="tag tag-chalk">Platform</span>
-              <span class="tag tag-chalk">Community</span>
+              <span class="tag tag-chalk">Platform</span><span class="tag tag-chalk">Community</span>
             </div>
             <h3 class="d-xs mb-12">Kinnoc</h3>
-            <p class="small" style="color:var(--white-60);line-height:1.7;">A community platform designed to connect people, ideas, and opportunities. Built for founders, students, and ambitious builders.</p>
+            <p class="small" style="color:var(--white-60);line-height:1.7">A community platform designed to connect people, ideas, and opportunities. Built for founders, students, and ambitious builders.</p>
             <a href="products.html" class="btn btn-glass btn-sm mt-20" style="width:100%;justify-content:center">View Product <i class="fa-solid fa-arrow-right"></i></a>
           </div>
         </div>
       </div>
-      <div class="p-card" data-reveal="up" data-d="3" data-tilt>
+      <div class="p-card holo-shine" data-reveal="up" data-d="3" data-tilt>
         <div class="p-card__inner">
-          <div class="p-card__img">
+          <div class="p-card__img scanlines hud-frame">
             <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80" alt="BIIT" loading="lazy">
           </div>
           <div class="p-card__body">
             <div class="tags mb-16">
               <span class="tag tag-amber"><i class="fa-solid fa-circle" style="font-size:.4rem"></i> Beta</span>
-              <span class="tag tag-chalk">Community</span>
-              <span class="tag tag-chalk">EdTech</span>
+              <span class="tag tag-chalk">Community</span><span class="tag tag-chalk">EdTech</span>
             </div>
             <h3 class="d-xs mb-12">BIIT</h3>
-            <p class="small" style="color:var(--white-60);line-height:1.7;">Be Involved In Tech — helping young Africans break into the industry through practical projects, mentorship, and real-world experience.</p>
+            <p class="small" style="color:var(--white-60);line-height:1.7">Be Involved In Tech — helping young Africans break into the industry through practical projects, mentorship, and real experience.</p>
             <a href="products.html" class="btn btn-glass btn-sm mt-20" style="width:100%;justify-content:center">View Product <i class="fa-solid fa-arrow-right"></i></a>
           </div>
         </div>
@@ -432,7 +373,7 @@
   </div>
 </section>
 
-<!-- ══ NUMBERS ══ -->
+<!-- ═══ NUMBERS ═══ -->
 <section class="sec" style="padding-top:0">
   <div class="container">
     <div class="nums-row">
@@ -444,11 +385,11 @@
   </div>
 </section>
 
-<!-- ══ CTA ══ -->
+<!-- ═══ CTA ═══ -->
 <section class="sec">
   <div class="container">
     <div class="cta-box" data-reveal="scale">
-      <div class="orb orb-blue" style="width:500px;height:500px;top:-60%;left:50%;transform:translateX(-50%);opacity:.35" aria-hidden="true"></div>
+      <div class="orb orb-blue" style="width:500px;height:500px;top:-60%;left:50%;transform:translateX(-50%);opacity:.3" aria-hidden="true"></div>
       <span class="badge" style="margin-bottom:24px"><span class="bdot"></span> Start Building</span>
       <h2 class="d-md" style="margin-bottom:20px">Ready to build the <span class="text-blue">future</span>?</h2>
       <p class="lead" style="max-width:500px;margin:0 auto">Whether you're a founder with a vision, a community builder, or a startup looking for infrastructure — Brivent is built for you.</p>
@@ -460,7 +401,7 @@
   </div>
 </section>
 
-<!-- ══ FOOTER ══ -->
+<!-- ═══ FOOTER ═══ -->
 <footer class="footer">
   <div class="container">
     <div class="footer__grid">

@@ -106,6 +106,18 @@
     @media (max-width:600px){
       .process-grid { grid-template-columns:1fr; }
     }
+    /* Floating 3D shape decoration */
+    .shape-float {
+      position:absolute;
+      width:180px; height:180px;
+      pointer-events:none;
+      opacity:.75;
+      z-index:0;
+    }
+    .shape-float.tl { top:clamp(40px,6vw,70px); left:clamp(16px,4vw,48px); }
+    .shape-float.tr { top:clamp(40px,6vw,70px); right:clamp(16px,4vw,48px); }
+    .shape-float.bl { bottom:clamp(24px,4vw,48px); left:clamp(16px,4vw,36px); }
+    @media (max-width:768px){ .shape-float { width:120px;height:120px;opacity:.5; } }
   </style>
 </head>
 <body>
@@ -166,6 +178,7 @@
 
 <!-- ══ SERVICE 01: PRODUCT DEVELOPMENT ══ -->
 <section class="svc-section" id="product-dev">
+  <div class="shape-float tr" data-shape="cube" aria-hidden="true"></div>
   <div class="container">
     <div class="svc-layout">
       <div data-reveal="left">
@@ -201,6 +214,7 @@
 
 <!-- ══ SERVICE 02: COMMUNITY BUILDING ══ -->
 <section class="svc-section" id="community">
+  <div class="shape-float tl" data-shape="tetra" aria-hidden="true"></div>
   <div class="container">
     <div class="svc-layout rev">
       <div data-reveal="right">
@@ -235,6 +249,7 @@
 
 <!-- ══ SERVICE 03: STARTUP SUPPORT ══ -->
 <section class="svc-section" id="startup">
+  <div class="shape-float bl" data-shape="ico" aria-hidden="true"></div>
   <div class="container">
     <div class="svc-layout">
       <div data-reveal="left">

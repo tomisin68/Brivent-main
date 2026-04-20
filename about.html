@@ -12,245 +12,150 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
-    /* PAGE HERO */
     .p-hero {
       padding: calc(90px + clamp(60px,8vw,100px)) 0 clamp(60px,8vw,100px);
-      position: relative; overflow: hidden;
+      position: relative; overflow: hidden; min-height: 70vh;
+      display: flex; align-items: center;
     }
-    .p-hero__label {
-      font-size:.68rem; font-weight:700; letter-spacing:.16em;
-      text-transform:uppercase; color:var(--persian);
-      margin-bottom:20px; display:block;
-    }
-    .p-hero h1 { max-width:820px; }
-    .p-hero .lead { max-width:580px; margin-top:20px; }
-    /* Quote block */
+    .p-hero__canvas { position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0; }
+    .p-hero__label { font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--persian);margin-bottom:20px;display:block; }
+    .p-hero__content { position:relative;z-index:1; }
+    /* Quote */
     .quote-block {
       border-left: 2px solid var(--persian);
       padding: 24px 32px;
-      background: var(--glass-b);
+      background: linear-gradient(90deg,rgba(21,43,249,.06),transparent);
       border-radius: 0 var(--r-md) var(--r-md) 0;
-      margin: clamp(40px,6vw,80px) 0;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
     }
     .quote-block blockquote {
-      font-family: var(--font-display);
-      font-size: clamp(1.3rem, 2.5vw, 2rem);
-      font-weight: 500;
-      letter-spacing: -.02em;
-      line-height: 1.4;
-      color: var(--white-c);
-      margin-bottom: 16px;
+      font-family: var(--font-display); font-size: clamp(1.2rem,2.2vw,1.9rem);
+      font-weight: 500; letter-spacing: -.02em; line-height: 1.45;
+      color: var(--white-c); margin-bottom: 16px;
     }
-    .quote-block cite {
-      font-size: .78rem; letter-spacing:.1em;
-      text-transform:uppercase; color:var(--white-40);
-      font-weight:700; font-style:normal;
-    }
-    /* Story section */
-    .story-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(40px, 8vw, 100px);
-      align-items: start;
-    }
-    .story-img {
-      position: relative; border-radius: var(--r-xl); overflow: hidden;
-      aspect-ratio: 3/4;
-    }
-    .story-img img { width:100%;height:100%;object-fit:cover;filter:brightness(.72) saturate(.75); }
-    .story-img::before {
-      content:''; position:absolute;inset:0;
-      background:linear-gradient(to bottom,transparent 40%,rgba(3,3,45,.9));
-      z-index:1;
-    }
-    .story-img__caption {
-      position:absolute; bottom:24px; left:24px; right:24px;
-      z-index:2;
-      font-size:.78rem; color:var(--white-60); line-height:1.6;
-    }
-    .story-img__caption strong { display:block; font-family:var(--font-display); font-size:1.1rem; color:var(--white-c); margin-bottom:4px; }
-    /* Values grid */
-    .val-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
+    .quote-block cite { font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white-40);font-weight:700;font-style:normal; }
+    /* Story grid */
+    .story-grid { display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,8vw,100px);align-items:start; }
+    .story-img { position:relative;border-radius:var(--r-xl);overflow:hidden;aspect-ratio:3/4; }
+    .story-img img { width:100%;height:100%;object-fit:cover;filter:brightness(.68) saturate(.72); }
+    .story-img::before { content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(3,3,45,.92));z-index:1; }
+    .story-img::after  { content:'';position:absolute;inset:0;border:1px solid var(--glass-border);border-radius:inherit;z-index:3;pointer-events:none; }
+    .story-img__cap { position:absolute;bottom:24px;left:24px;right:24px;z-index:4;font-size:.78rem;color:var(--white-60);line-height:1.6; }
+    .story-img__cap strong { display:block;font-family:var(--font-display);font-size:1.1rem;color:var(--white-c);margin-bottom:4px; }
+    /* Values */
+    .val-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:16px; }
     .val-card {
-      padding: 32px;
-      border-radius: var(--r-lg);
-      background: var(--glass-w);
-      border: 1px solid var(--glass-border);
-      position: relative; overflow: hidden;
-      transition: border-color var(--t-med), transform var(--t-med) var(--ease), box-shadow var(--t-med);
+      padding:32px; border-radius:var(--r-lg);
+      background:linear-gradient(145deg,rgba(255,255,255,.05) 0%,rgba(21,43,249,.03) 100%);
+      border:1px solid var(--glass-border); position:relative; overflow:hidden;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.07);
+      transition:border-color var(--t-med),transform var(--t-med) var(--ease),box-shadow var(--t-med);
     }
-    .val-card:hover { border-color:rgba(215,215,255,.22); transform:translateY(-4px); box-shadow:0 20px 50px rgba(0,0,0,.3); }
-    .val-card::before {
-      content:''; position:absolute; inset:0;
-      background:linear-gradient(145deg,rgba(21,43,249,.04),transparent 55%);
-      opacity:0; transition:opacity var(--t-med);
-    }
-    .val-card:hover::before { opacity:1; }
-    .val-card__icon {
-      width:46px; height:46px; border-radius:var(--r-sm);
-      background:var(--persian-dim); border:1px solid rgba(21,43,249,.2);
-      display:flex; align-items:center; justify-content:center;
-      color:var(--persian); font-size:1rem; margin-bottom:18px;
-    }
-    .val-card h4 { font-size:1.1rem; margin-bottom:10px; }
-    .val-card p  { font-size:.85rem; color:var(--white-60); line-height:1.7; }
-    /* Vision / Mission */
-    .vm-split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-    .vm-box {
-      padding: clamp(32px,4vw,52px);
-      border-radius: var(--r-xl);
-      border: 1px solid var(--glass-border);
-      background: var(--glass-w);
-      position: relative; overflow: hidden;
-    }
-    .vm-box.vision { background: rgba(21,43,249,.06); border-color: rgba(21,43,249,.18); }
-    .vm-box.mission { background: rgba(255,17,11,.05); border-color: rgba(255,17,11,.14); }
-    .vm-box__label {
-      font-size:.64rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
-      color:var(--white-40); margin-bottom:16px; display:block;
-    }
-    .vm-box.vision .vm-box__label { color:rgba(21,43,249,.8); }
-    .vm-box.mission .vm-box__label { color:rgba(255,17,11,.7); }
-    .vm-box p { font-size:clamp(.9rem,1.2vw,1.05rem); color:var(--white-80); line-height:1.75; }
-    /* Team grid */
-    .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
-    .team-card {
-      border-radius:var(--r-xl); overflow:hidden;
-      border:1px solid var(--glass-border);
-      background:var(--glass-w);
-      transition: border-color var(--t-med), transform var(--t-med) var(--ease);
-    }
-    .team-card:hover { border-color:rgba(215,215,255,.22); transform:translateY(-4px); }
-    .team-card__img {
-      aspect-ratio:1/1; overflow:hidden;
-    }
-    .team-card__img img { width:100%;height:100%;object-fit:cover;filter:brightness(.8) saturate(.7); transition:transform var(--t-slow) var(--ease); }
-    .team-card:hover .team-card__img img { transform:scale(1.05); }
-    .team-card__body { padding:22px 24px; }
-    .team-card h4 { font-size:1rem; margin-bottom:3px; }
-    .team-card__role { font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--persian); font-weight:700; }
-    /* Responsive */
-    @media (max-width:1024px){
-      .story-grid { grid-template-columns:1fr; }
-      .vm-split { grid-template-columns:1fr; }
-      .val-grid { grid-template-columns:1fr; }
-      .team-grid { grid-template-columns:repeat(2,1fr); }
-    }
-    @media (max-width:600px){
-      .team-grid { grid-template-columns:1fr; }
-    }
+    .val-card:hover { border-color:rgba(215,215,255,.22);transform:translateY(-5px);box-shadow:0 24px 60px rgba(0,0,0,.4),0 0 30px rgba(21,43,249,.08); }
+    .val-ico { width:46px;height:46px;border-radius:var(--r-sm);background:var(--persian-dim);border:1px solid rgba(21,43,249,.2);display:flex;align-items:center;justify-content:center;color:var(--persian);font-size:1rem;margin-bottom:18px;box-shadow:0 0 15px rgba(21,43,249,.2); }
+    .val-card h4 { font-size:1.05rem;margin-bottom:10px; }
+    .val-card p  { font-size:.84rem;color:var(--white-60);line-height:1.75; }
+    /* Vision/Mission */
+    .vm-split { display:grid;grid-template-columns:1fr 1fr;gap:20px; }
+    .vm-box { padding:clamp(32px,4vw,52px);border-radius:var(--r-xl);border:1px solid var(--glass-border);background:var(--glass-w);position:relative;overflow:hidden; }
+    .vm-box.vision  { background:rgba(21,43,249,.06); border-color:rgba(21,43,249,.18); }
+    .vm-box.mission { background:rgba(255,17,11,.05);  border-color:rgba(255,17,11,.14); }
+    .vm-lbl { font-size:.64rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--white-40);margin-bottom:16px;display:block; }
+    .vm-box.vision .vm-lbl  { color:rgba(21,43,249,.8); }
+    .vm-box.mission .vm-lbl { color:rgba(255,17,11,.7); }
+    .vm-box p { font-size:clamp(.88rem,1.2vw,1.04rem);color:var(--white-80);line-height:1.8; }
+    /* Team */
+    .team-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px; }
+    .team-card { border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--glass-border);background:var(--glass-w);transition:border-color var(--t-med),transform var(--t-med) var(--ease); }
+    .team-card:hover { border-color:rgba(215,215,255,.22);transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.35); }
+    .team-card__img { aspect-ratio:1/1;overflow:hidden; }
+    .team-card__img img { width:100%;height:100%;object-fit:cover;filter:brightness(.78) saturate(.7);transition:transform var(--t-slow) var(--ease); }
+    .team-card:hover .team-card__img img { transform:scale(1.06); }
+    .team-card__body { padding:20px 22px; }
+    .team-card h4 { font-size:.96rem;margin-bottom:3px; }
+    .team-card__role { font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--persian);font-weight:700; }
+    @media(max-width:1024px){ .story-grid{grid-template-columns:1fr} .vm-split{grid-template-columns:1fr} .val-grid{grid-template-columns:1fr} .team-grid{grid-template-columns:repeat(2,1fr)} }
+    @media(max-width:600px){ .team-grid{grid-template-columns:1fr} }
   </style>
 </head>
 <body>
-
 <div class="cur-dot" id="curDot"></div>
 <div class="cur-ring" id="curRing"></div>
-<div class="loader" id="loader">
-  <div class="loader__logo"><img src="brivent.png" alt="Brivent"></div>
-  <div class="loader__bar"></div>
-</div>
+<div class="loader" id="loader"><div class="loader__logo"><img src="brivent.png" alt="Brivent"></div><div class="loader__bar"></div></div>
 
 <nav class="nav" id="nav">
-  <div class="container">
-    <div class="nav__inner">
-      <a href="index.html" class="nav__logo"><img src="brivent.png" alt="Brivent"></a>
-      <ul class="nav__links">
-        <li><a href="index.html"    class="nav__link">Home</a></li>
-        <li><a href="about.html"    class="nav__link">About</a></li>
-        <li><a href="services.html" class="nav__link">Services</a></li>
-        <li><a href="products.html" class="nav__link">Products</a></li>
-        <li><a href="contact.html"  class="nav__link">Contact</a></li>
-      </ul>
-      <div class="nav__actions">
-        <a href="contact.html" class="btn btn-primary btn-sm" data-mag>Get in Touch <i class="fa-solid fa-arrow-right"></i></a>
-        <button class="nav__burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
-      </div>
+  <div class="container"><div class="nav__inner">
+    <a href="index.html" class="nav__logo"><img src="brivent.png" alt="Brivent"></a>
+    <ul class="nav__links">
+      <li><a href="index.html" class="nav__link">Home</a></li>
+      <li><a href="about.html" class="nav__link">About</a></li>
+      <li><a href="services.html" class="nav__link">Services</a></li>
+      <li><a href="products.html" class="nav__link">Products</a></li>
+      <li><a href="contact.html" class="nav__link">Contact</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="contact.html" class="btn btn-primary btn-sm" data-mag>Get in Touch <i class="fa-solid fa-arrow-right"></i></a>
+      <button class="nav__burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
     </div>
-  </div>
+  </div></div>
 </nav>
-
 <div class="m-menu" id="mMenu">
   <ul class="m-menu__links">
-    <li><a href="index.html"    class="m-menu__link">Home</a></li>
-    <li><a href="about.html"    class="m-menu__link">About</a></li>
+    <li><a href="index.html" class="m-menu__link">Home</a></li>
+    <li><a href="about.html" class="m-menu__link">About</a></li>
     <li><a href="services.html" class="m-menu__link">Services</a></li>
     <li><a href="products.html" class="m-menu__link">Products</a></li>
-    <li><a href="contact.html"  class="m-menu__link">Contact</a></li>
+    <li><a href="contact.html" class="m-menu__link">Contact</a></li>
   </ul>
   <p class="m-menu__foot">&copy; 2024 Brivent &mdash; Lagos, Nigeria</p>
 </div>
 
-<!-- ══ PAGE HERO ══ -->
+<!-- ═══ HERO with DNA HELIX ═══ -->
 <section class="p-hero">
-  <div class="orb orb-blue"  style="width:600px;height:600px;top:-20%;right:-10%;opacity:.5" aria-hidden="true"></div>
-  <div class="orb orb-red"   style="width:350px;height:350px;bottom:-10%;left:-5%;opacity:.35" aria-hidden="true"></div>
+  <!-- DNA DOUBLE HELIX canvas -->
+  <canvas id="dnaCanvas" class="p-hero__canvas" aria-hidden="true"></canvas>
   <div class="grid-ovr" aria-hidden="true"></div>
-  <div class="container" style="position:relative;z-index:1">
+  <div class="orb orb-blue"  style="width:500px;height:500px;top:-20%;right:-8%;opacity:.4"  aria-hidden="true"></div>
+  <div class="orb orb-red"   style="width:300px;height:300px;bottom:-10%;left:-5%;opacity:.3" aria-hidden="true"></div>
+  <div class="container p-hero__content">
     <span class="p-hero__label" data-reveal="up">Our Story</span>
-    <h1 class="d-lg" data-reveal="up" data-d="1">The story behind<br>the <span style="color:var(--persian)">infrastructure.</span></h1>
-    <p class="lead" data-reveal="up" data-d="2">Brivent was built from a single conviction: that ambition deserves infrastructure. We exist to give shape, structure, and scale to the ideas that matter most.</p>
+    <h1 class="d-lg" data-reveal="up" data-d="1">The story behind<br>the <span class="text-blue">infrastructure.</span></h1>
+    <p class="lead mt-16" data-reveal="up" data-d="2" style="max-width:580px">Brivent was built from a single conviction: that ambition deserves infrastructure. We exist to give shape, structure, and scale to the ideas that matter most.</p>
   </div>
 </section>
 
-<!-- ══ QUOTE ══ -->
+<!-- QUOTE -->
 <section class="sec-sm">
   <div class="container">
     <div class="quote-block" data-reveal="up">
       <blockquote>"We're not just building products. We're building the ecosystem that makes great products possible — and the community that makes builders unstoppable."</blockquote>
-      <cite><i class="fa-solid fa-quote-right" style="color:var(--persian);margin-right:8px"></i> Brivent Founding Team &mdash; Lagos, 2024</cite>
+      <cite><i class="fa-solid fa-quote-right" style="color:var(--persian);margin-right:8px"></i>Brivent Founding Team &mdash; Lagos, 2024</cite>
     </div>
   </div>
 </section>
 
-<!-- ══ STORY ══ -->
+<!-- STORY -->
 <section class="sec">
   <div class="container">
     <div class="story-grid">
-      <div class="story-img" data-reveal="left">
+      <div class="story-img holo-shine scanlines hud-frame" data-reveal="left">
         <img src="https://images.unsplash.com/photo-1553028826-f4804a6dba3b?w=800&q=80" alt="Brivent origin story" loading="lazy">
-        <div class="story-img__caption">
+        <div class="story-img__cap">
           <strong>Lagos, Nigeria — 2024</strong>
           Where Brivent was born: a small team with a clear vision and relentless drive.
         </div>
       </div>
       <div data-reveal="right">
-        <div class="sec-hd">
-          <span class="badge"><span class="bdot"></span> How It Started</span>
-          <h2 class="d-sm mt-16">Born from a gap in the ecosystem.</h2>
-        </div>
-        <p class="lead" style="margin-bottom:24px">Brivent was founded in Lagos in 2024 by a group of builders who kept running into the same problem: great ideas in Africa were dying not from lack of talent, but from lack of infrastructure.</p>
-        <p class="small" style="color:var(--white-60);line-height:1.85;margin-bottom:24px">The tools were fragmented. The networks were closed. The support systems that founders in Silicon Valley took for granted simply didn't exist at scale on the continent. So we decided to build them.</p>
+        <div class="sec-hd"><span class="badge"><span class="bdot"></span> How It Started</span><h2 class="d-sm mt-16">Born from a gap in the ecosystem.</h2></div>
+        <p class="lead" style="margin-bottom:22px">Brivent was founded in Lagos in 2024 by a group of builders who kept running into the same problem: great ideas in Africa were dying not from lack of talent, but from lack of infrastructure.</p>
+        <p class="small" style="color:var(--white-60);line-height:1.85;margin-bottom:22px">The tools were fragmented. The networks were closed. The support systems that founders in Silicon Valley took for granted simply didn't exist at scale on the continent. So we decided to build them.</p>
         <p class="small" style="color:var(--white-60);line-height:1.85">We started by building products that solved our own problems — automation tools, community platforms, education systems. And as those products grew, so did our vision: not just to build for Africa, but to build the infrastructure that makes Africa build better.</p>
         <div class="mt-32">
           <div class="timeline">
-            <div class="t-item">
-              <div class="t-year">2024 — Q1</div>
-              <h4>Brivent is Founded</h4>
-              <p>A small team in Lagos commits to building the infrastructure of ambition. The mission is set: build products, support founders, grow ecosystems.</p>
-            </div>
-            <div class="t-item">
-              <div class="t-year">2024 — Q2</div>
-              <h4>WhatsAuto Goes Live</h4>
-              <p>Our first product launches — a WhatsApp automation system for African businesses. First paying customers onboarded within weeks.</p>
-            </div>
-            <div class="t-item">
-              <div class="t-year">2024 — Q3</div>
-              <h4>BIIT Beta Launches</h4>
-              <p>Be Involved In Tech enters beta, opening access to tech education for young people across Nigeria.</p>
-            </div>
-            <div class="t-item">
-              <div class="t-year">2024 — Q4</div>
-              <h4>Kinnoc Development Begins</h4>
-              <p>Work begins on Kinnoc — a community platform designed to connect the entire builder ecosystem across Africa.</p>
-            </div>
+            <div class="t-item"><div class="t-year">2024 — Q1</div><h4>Brivent is Founded</h4><p>A small team in Lagos commits to building the infrastructure of ambition. The mission is set: build products, support founders, grow ecosystems.</p></div>
+            <div class="t-item"><div class="t-year">2024 — Q2</div><h4>WhatsAuto Goes Live</h4><p>Our first product launches — a WhatsApp automation system for African businesses. First paying customers onboarded within weeks.</p></div>
+            <div class="t-item"><div class="t-year">2024 — Q3</div><h4>BIIT Beta Launches</h4><p>Be Involved In Tech enters beta, opening access to tech education for young people across Nigeria.</p></div>
+            <div class="t-item"><div class="t-year">2024 — Q4</div><h4>Kinnoc Development Begins</h4><p>Work begins on Kinnoc — a community platform to connect the entire builder ecosystem across Africa.</p></div>
           </div>
         </div>
       </div>
@@ -258,40 +163,24 @@
   </div>
 </section>
 
-<!-- ══ VALUES ══ -->
+<!-- VALUES -->
 <section class="sec" style="padding-top:0">
   <div class="container">
     <div class="sec-hd ctr" data-reveal="up">
       <span class="badge"><span class="bdot red"></span> What Drives Us</span>
       <h2 class="d-md mt-16">Our core values.</h2>
-      <p class="lead mt-16">Four principles that guide every decision we make, every product we ship, and every community we build.</p>
+      <p class="lead mt-16">Four principles guiding every decision we make, every product we ship, and every community we build.</p>
     </div>
     <div class="val-grid">
-      <div class="val-card" data-reveal="up" data-d="1">
-        <div class="val-card__icon"><i class="fa-solid fa-magnifying-glass"></i></div>
-        <h4>Clarity</h4>
-        <p>We believe that clear thinking leads to better building. We define problems precisely before we build solutions, and we communicate with radical transparency.</p>
-      </div>
-      <div class="val-card" data-reveal="up" data-d="2">
-        <div class="val-card__icon"><i class="fa-solid fa-shield-halved"></i></div>
-        <h4>Integrity</h4>
-        <p>We do what we say we'll do. Trust is the foundation of every product we ship and every partnership we build. We don't cut corners when it comes to our word.</p>
-      </div>
-      <div class="val-card" data-reveal="up" data-d="3">
-        <div class="val-card__icon"><i class="fa-solid fa-handshake"></i></div>
-        <h4>Trust</h4>
-        <p>We earn trust through consistency, competence, and care. Every user who touches a Brivent product should feel supported, understood, and valued.</p>
-      </div>
-      <div class="val-card" data-reveal="up" data-d="4">
-        <div class="val-card__icon"><i class="fa-solid fa-seedling"></i></div>
-        <h4>Growth</h4>
-        <p>We're obsessed with growth — not just of our business, but of the people we work with and the communities we build. Rising tides lift all boats.</p>
-      </div>
+      <div class="val-card" data-reveal="up" data-d="1"><div class="val-ico"><i class="fa-solid fa-magnifying-glass"></i></div><h4>Clarity</h4><p>We believe clear thinking leads to better building. We define problems precisely before building solutions and communicate with radical transparency.</p></div>
+      <div class="val-card" data-reveal="up" data-d="2"><div class="val-ico"><i class="fa-solid fa-shield-halved"></i></div><h4>Integrity</h4><p>We do what we say we'll do. Trust is the foundation of every product we ship and every partnership we build. We don't cut corners on our word.</p></div>
+      <div class="val-card" data-reveal="up" data-d="3"><div class="val-ico"><i class="fa-solid fa-handshake"></i></div><h4>Trust</h4><p>We earn trust through consistency, competence, and care. Every user who touches a Brivent product should feel supported and valued.</p></div>
+      <div class="val-card" data-reveal="up" data-d="4"><div class="val-ico"><i class="fa-solid fa-seedling"></i></div><h4>Growth</h4><p>We're obsessed with growth — not just of our business, but of the people we work with and the communities we build. Rising tides lift all boats.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ══ VISION + MISSION ══ -->
+<!-- VISION + MISSION -->
 <section class="sec" style="padding-top:0">
   <div class="container">
     <div class="sec-hd ctr" data-reveal="up">
@@ -300,25 +189,25 @@
     </div>
     <div class="vm-split" data-reveal="up" data-d="2">
       <div class="vm-box vision">
-        <span class="vm-box__label"><i class="fa-solid fa-eye" style="margin-right:6px"></i>Vision</span>
-        <h3 class="d-sm mb-16" style="font-size:clamp(1.3rem,2vw,1.8rem)">To be the foundational infrastructure powering the next generation of scalable systems across Africa and beyond.</h3>
+        <span class="vm-lbl"><i class="fa-solid fa-eye" style="margin-right:6px"></i>Vision</span>
+        <h3 class="d-sm mb-16" style="font-size:clamp(1.2rem,2vw,1.75rem)">To be the foundational infrastructure powering the next generation of scalable systems across Africa and beyond.</h3>
         <p>We envision a future where every ambitious builder in Africa has access to the same quality of tools, networks, and support as their counterparts anywhere in the world.</p>
       </div>
       <div class="vm-box mission">
-        <span class="vm-box__label"><i class="fa-solid fa-bullseye" style="margin-right:6px"></i>Mission</span>
-        <h3 class="d-sm mb-16" style="font-size:clamp(1.3rem,2vw,1.8rem)">Give structure to ambition by building products, supporting ideas, and creating ecosystems where builders thrive.</h3>
+        <span class="vm-lbl"><i class="fa-solid fa-bullseye" style="margin-right:6px"></i>Mission</span>
+        <h3 class="d-sm mb-16" style="font-size:clamp(1.2rem,2vw,1.75rem)">Give structure to ambition by building products, supporting ideas, and creating ecosystems where builders thrive.</h3>
         <ul class="checklist" style="margin-top:0">
-          <li><i class="fa-solid fa-circle-check"></i> Build products that solve real African problems</li>
-          <li><i class="fa-solid fa-circle-check"></i> Support early-stage founders with genuine infrastructure</li>
-          <li><i class="fa-solid fa-circle-check"></i> Create communities that multiply individual potential</li>
-          <li><i class="fa-solid fa-circle-check"></i> Scale globally from a proudly African foundation</li>
+          <li><i class="fa-solid fa-circle-check"></i>Build products that solve real African problems</li>
+          <li><i class="fa-solid fa-circle-check"></i>Support early-stage founders with genuine infrastructure</li>
+          <li><i class="fa-solid fa-circle-check"></i>Create communities that multiply individual potential</li>
+          <li><i class="fa-solid fa-circle-check"></i>Scale globally from a proudly African foundation</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ TEAM ══ -->
+<!-- TEAM -->
 <section class="sec" style="padding-top:0">
   <div class="container">
     <div class="sec-hd" data-reveal="up">
@@ -327,42 +216,18 @@
       <p class="lead mt-16">A small, focused team of designers, engineers, and community builders working from Lagos with a global mindset.</p>
     </div>
     <div class="team-grid">
-      <div class="team-card" data-reveal="up" data-d="1">
-        <div class="team-card__img">
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" alt="Team member" loading="lazy">
-        </div>
-        <div class="team-card__body">
-          <h4>Founder &amp; CEO</h4>
-          <div class="team-card__role">Leadership</div>
-        </div>
-      </div>
-      <div class="team-card" data-reveal="up" data-d="2">
-        <div class="team-card__img">
-          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80" alt="Team member" loading="lazy">
-        </div>
-        <div class="team-card__body">
-          <h4>Head of Product</h4>
-          <div class="team-card__role">Product</div>
-        </div>
-      </div>
-      <div class="team-card" data-reveal="up" data-d="3">
-        <div class="team-card__img">
-          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80" alt="Team member" loading="lazy">
-        </div>
-        <div class="team-card__body">
-          <h4>Lead Engineer</h4>
-          <div class="team-card__role">Engineering</div>
-        </div>
-      </div>
+      <div class="team-card holo-shine" data-reveal="up" data-d="1"><div class="team-card__img"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" alt="Team member" loading="lazy"></div><div class="team-card__body"><h4>Founder &amp; CEO</h4><div class="team-card__role">Leadership</div></div></div>
+      <div class="team-card holo-shine" data-reveal="up" data-d="2"><div class="team-card__img"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80" alt="Team member" loading="lazy"></div><div class="team-card__body"><h4>Head of Product</h4><div class="team-card__role">Product</div></div></div>
+      <div class="team-card holo-shine" data-reveal="up" data-d="3"><div class="team-card__img"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80" alt="Team member" loading="lazy"></div><div class="team-card__body"><h4>Lead Engineer</h4><div class="team-card__role">Engineering</div></div></div>
     </div>
   </div>
 </section>
 
-<!-- ══ CTA ══ -->
+<!-- CTA -->
 <section class="sec" style="padding-top:0">
   <div class="container">
-    <div style="background:var(--glass-w);border:1px solid var(--glass-border);border-radius:var(--r-2xl);padding:clamp(48px,7vw,90px) clamp(24px,5vw,64px);display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;position:relative;overflow:hidden" data-reveal="up">
-      <div class="orb orb-blue" style="width:400px;height:400px;right:-10%;top:50%;transform:translateY(-50%);opacity:.3" aria-hidden="true"></div>
+    <div style="background:linear-gradient(145deg,rgba(255,255,255,.05) 0%,rgba(21,43,249,.04) 100%);border:1px solid var(--glass-border);border-radius:var(--r-2xl);padding:clamp(48px,7vw,90px) clamp(24px,5vw,64px);display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)" data-reveal="up">
+      <div class="orb orb-blue" style="width:400px;height:400px;right:-10%;top:50%;transform:translateY(-50%);opacity:.28" aria-hidden="true"></div>
       <div style="position:relative;z-index:1">
         <span class="badge" style="margin-bottom:16px"><span class="bdot"></span> Work With Us</span>
         <h2 class="d-sm" style="margin-bottom:12px">Join the infrastructure.</h2>
@@ -375,53 +240,15 @@
   </div>
 </section>
 
-<!-- ══ FOOTER ══ -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer__grid">
-      <div class="footer__brand">
-        <img src="brivent.png" alt="Brivent">
-        <p>Building the infrastructure that powers the next generation of ventures. From Lagos to the world.</p>
-        <div class="footer__socials">
-          <a href="#" class="soc-btn" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
-          <a href="#" class="soc-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-          <a href="#" class="soc-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" class="soc-btn" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-        </div>
-      </div>
-      <div class="footer__col">
-        <h6>Company</h6>
-        <ul class="footer__links">
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="products.html">Products</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer__col">
-        <h6>Products</h6>
-        <ul class="footer__links">
-          <li><a href="products.html">WhatsAuto</a></li>
-          <li><a href="products.html">Kinnoc</a></li>
-          <li><a href="products.html">BIIT</a></li>
-        </ul>
-      </div>
-      <div class="footer__col">
-        <h6>Connect</h6>
-        <ul class="footer__links">
-          <li><a href="mailto:hello@brivent.co"><i class="fa-regular fa-envelope" style="width:14px;color:var(--persian)"></i>&nbsp; hello@brivent.co</a></li>
-          <li><a href="#"><i class="fa-solid fa-globe" style="width:14px;color:var(--persian)"></i>&nbsp; brivent.co</a></li>
-          <li><a href="#"><i class="fa-solid fa-location-dot" style="width:14px;color:var(--persian)"></i>&nbsp; Lagos, Nigeria</a></li>
-          <li><a href="#"><i class="fa-solid fa-wifi" style="width:14px;color:var(--persian)"></i>&nbsp; Remote Worldwide</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer__bar">
-      <p>&copy; 2024 Brivent. All rights reserved. Built with ambition.</p>
-      <p>Lagos, Nigeria &middot; Remote Worldwide</p>
-    </div>
+<footer class="footer"><div class="container">
+  <div class="footer__grid">
+    <div class="footer__brand"><img src="brivent.png" alt="Brivent"><p>Building the infrastructure that powers the next generation of ventures. From Lagos to the world.</p><div class="footer__socials"><a href="#" class="soc-btn"><i class="fa-brands fa-x-twitter"></i></a><a href="#" class="soc-btn"><i class="fa-brands fa-linkedin-in"></i></a><a href="#" class="soc-btn"><i class="fa-brands fa-instagram"></i></a><a href="#" class="soc-btn"><i class="fa-brands fa-github"></i></a></div></div>
+    <div class="footer__col"><h6>Company</h6><ul class="footer__links"><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="products.html">Products</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer__col"><h6>Products</h6><ul class="footer__links"><li><a href="products.html">WhatsAuto</a></li><li><a href="products.html">Kinnoc</a></li><li><a href="products.html">BIIT</a></li></ul></div>
+    <div class="footer__col"><h6>Connect</h6><ul class="footer__links"><li><a href="mailto:hello@brivent.co"><i class="fa-regular fa-envelope" style="width:14px;color:var(--persian)"></i>&nbsp; hello@brivent.co</a></li><li><a href="#"><i class="fa-solid fa-globe" style="width:14px;color:var(--persian)"></i>&nbsp; brivent.co</a></li><li><a href="#"><i class="fa-solid fa-location-dot" style="width:14px;color:var(--persian)"></i>&nbsp; Lagos, Nigeria</a></li></ul></div>
   </div>
-</footer>
+  <div class="footer__bar"><p>&copy; 2024 Brivent. All rights reserved. Built with ambition.</p><p>Lagos, Nigeria &middot; Remote Worldwide</p></div>
+</div></footer>
 
 <script src="assets/js/main.js"></script>
 </body>
